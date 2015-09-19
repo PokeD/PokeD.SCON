@@ -4,6 +4,7 @@ using PokeD.Core.Interfaces;
 using PokeD.Core.Packets;
 using PokeD.Core.Packets.SCON;
 using PokeD.Core.Packets.SCON.Authorization;
+using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Status;
 using PokeD.Core.Wrappers;
 
@@ -115,8 +116,27 @@ namespace PokeD.SCON
                     break;
 
 
+                case SCONPacketTypes.AuthorizationComplete:
+                    HandleAuthorizationComplete((AuthorizationCompletePacket)packet);
+                    break;
+
+                case SCONPacketTypes.AuthorizationDisconnect:
+                    HandleAuthorizationDisconnect((AuthorizationDisconnectPacket)packet);
+                    break;
+
+
                 case SCONPacketTypes.PlayerListResponse:
                     HandlePlayerListResponse((PlayerListResponsePacket)packet);
+                    break;
+
+
+                case SCONPacketTypes.ChatMessage:
+                    HandleChatMessage((ChatMessagePacket) packet);
+                    break;
+
+
+                case SCONPacketTypes.PlayerLocationResponse:
+                    HandlePlayerLocationResponse((PlayerLocationResponsePacket) packet);
                     break;
             }
         }
