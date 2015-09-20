@@ -16,5 +16,8 @@ namespace PokeD.SCON
         void SendPlayerListRequest();
         void ExecuteCommand(string command);
 
+        void q1();
+        void q2();
+        void q3(string s);
     }
 }

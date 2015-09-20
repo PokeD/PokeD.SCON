@@ -24,14 +24,22 @@ namespace PokeD.SCON
         /// Not implemented.
         /// </summary>
         /// <param name="packet"></param>
-        private void HandleEncryptionResponse(EncryptionResponsePacket packet)
+        private void HandleEncryptionRequest(EncryptionRequestPacket packet)
         {
             if(Authorized)
                 return;
 
             if (AuthorizationStatus.HasFlag(AuthorizationStatus.EncryprionEnabled))
             {
+                var sharedKey = PKCS1Signature.CreateSecretKey();
 
+                var pkcs = new PKCS1Signature(packet.PublicKey);
+                var signedSecret = pkcs.SignData(sharedKey);
+                var signedVerify = pkcs.SignData(packet.VerificationToken);
+
+                SendPacket(new EncryptionResponsePacket { SharedSecret = signedSecret, VerificationToken = signedVerify });
+
+                Stream.InitializeEncryption(sharedKey);
             }
             else
                 throw new SCONException("Encryption was not enabled!");

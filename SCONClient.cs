@@ -112,8 +112,8 @@ namespace PokeD.SCON
                     break;
 
 
-                case SCONPacketTypes.EncryptionResponse:
-                    HandleEncryptionResponse((EncryptionResponsePacket)packet);
+                case SCONPacketTypes.EncryptionRequest:
+                    HandleEncryptionRequest((EncryptionRequestPacket) packet);
                     break;
 
 
@@ -191,6 +191,20 @@ namespace PokeD.SCON
             SendPacket(new ExecuteCommandPacket { Command = command });
         }
 
+        public void q1()
+        {
+            SendPacket(new CrashLogListRequestPacket());
+        }
+
+        public void q2()
+        {
+            SendPacket(new LogListRequestPacket());
+        }
+
+        public void q3(string s)
+        {
+            SendPacket(new LogFileRequestPacket { LogFilename = s });
+        }
 
         public void Dispose()
         {
