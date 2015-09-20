@@ -5,6 +5,7 @@ using PokeD.Core.Packets;
 using PokeD.Core.Packets.SCON;
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
+using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
 using PokeD.Core.Wrappers;
 
@@ -137,6 +138,24 @@ namespace PokeD.SCON
 
                 case SCONPacketTypes.PlayerLocationResponse:
                     HandlePlayerLocationResponse((PlayerLocationResponsePacket) packet);
+                    break;
+
+
+                case SCONPacketTypes.LogListResponse:
+                    HandleLogListResponse((LogListResponsePacket)packet);
+                    break;
+
+                case SCONPacketTypes.LogFileResponse:
+                    HandleLogFileResponse((LogFileResponsePacket)packet);
+                    break;
+
+
+                case SCONPacketTypes.CrashLogListResponse:
+                    HandleCrashLogListResponse((CrashLogListResponsePacket)packet);
+                    break;
+
+                case SCONPacketTypes.CrashLogFileResponse:
+                    HandleCrashLogFileResponse((CrashLogFileResponsePacket)packet);
                     break;
             }
         }

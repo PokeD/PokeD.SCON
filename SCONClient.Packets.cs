@@ -1,5 +1,6 @@
 ﻿using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
+using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
 
 using PokeD.SCON.Exceptions;
@@ -67,6 +68,46 @@ namespace PokeD.SCON
         }
 
         private void HandlePlayerLocationResponse(PlayerLocationResponsePacket packet)
+        {
+            if (Authorized)
+            {
+
+            }
+            else
+                throw new SCONException("You wasn't authorized!!");
+        }
+
+        private void HandleLogListResponse(LogListResponsePacket packet)
+        {
+            if (Authorized)
+            {
+
+            }
+            else
+                throw new SCONException("You wasn't authorized!!");
+        }
+
+        private void HandleLogFileResponse(LogFileResponsePacket packet)
+        {
+            if (Authorized)
+            {
+
+            }
+            else
+                throw new SCONException("You wasn't authorized!!");
+        }
+
+        private void HandleCrashLogListResponse(CrashLogListResponsePacket packet)
+        {
+            if (Authorized)
+            {
+
+            }
+            else
+                throw new SCONException("You wasn't authorized!!");
+        }
+
+        private void HandleCrashLogFileResponse(CrashLogFileResponsePacket packet)
         {
             if (Authorized)
             {
