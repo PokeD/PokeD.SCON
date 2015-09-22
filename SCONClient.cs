@@ -65,12 +65,10 @@ namespace PokeD.SCON
                 if (packetLength == 0)
                     throw new SCONException("Reading error: Packet Length size is 0.");
 
-                var packetId = Stream.ReadVarInt();
-
                 var data = Stream.ReadByteArray(packetLength - 1);
 
 
-                HandleData(packetId, data);
+                HandleData(data);
             }
         }
 
@@ -79,17 +77,21 @@ namespace PokeD.SCON
         /// </summary>
         /// <param name="id">Packet ID</param>
         /// <param name="data">Packet byte[] data</param>
-        private void HandleData(int id, byte[] data)
+        private void HandleData(byte[] data)
         {
             if (data == null)
                 return;
 
             using (var reader = new ProtobufDataReader(data))
             {
+                var id = Stream.ReadVarInt();
+                var origin = Stream.ReadVarInt();
+
                 if (SCONResponse.Packets[id] == null)
                     throw new SCONException("Reading error: Wrong packet ID.");
 
                 var packet = SCONResponse.Packets[id]().ReadPacket(reader);
+                packet.Origin = origin;
 
 
                 HandlePacket(packet);
@@ -195,12 +197,10 @@ namespace PokeD.SCON
         {
             SendPacket(new CrashLogListRequestPacket());
         }
-
         public void q2()
         {
             SendPacket(new LogListRequestPacket());
         }
-
         public void q3(string s)
         {
             SendPacket(new LogFileRequestPacket { LogFilename = s });

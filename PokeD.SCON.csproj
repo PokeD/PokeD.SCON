@@ -41,7 +41,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PKCS1Signature.cs" />
     <Compile Include="IClient.cs" />
     <Compile Include="IO\BouncyCastleAES.cs" />
     <Compile Include="IO\ProtobufStream.cs" />

@@ -1,4 +1,8 @@
-﻿using PokeD.Core.Packets.SCON.Authorization;
+﻿using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
+using PokeD.Core;
+using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
@@ -31,9 +35,11 @@ namespace PokeD.SCON
 
             if (AuthorizationStatus.HasFlag(AuthorizationStatus.EncryprionEnabled))
             {
-                var sharedKey = PKCS1Signature.CreateSecretKey();
+                var generator = new CipherKeyGenerator();
+                generator.Init(new KeyGenerationParameters(new SecureRandom(), 16 * 8));
+                var sharedKey = generator.GenerateKey();
 
-                var pkcs = new PKCS1Signature(packet.PublicKey);
+                var pkcs = new PKCS1Signer(packet.PublicKey);
                 var signedSecret = pkcs.SignData(sharedKey);
                 var signedVerify = pkcs.SignData(packet.VerificationToken);
 

@@ -364,6 +364,7 @@ namespace PokeD.SCON.IO
         public void SendPacket(ref ProtobufPacket packet)
         {
             WriteVarInt(packet.ID);
+            WriteVarInt(packet.Origin);
             packet.WritePacket(this);
             Purge();
         }
