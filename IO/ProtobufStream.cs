@@ -24,9 +24,6 @@ namespace PokeD.SCON.IO
 
         public bool EncryptionEnabled { get; private set; }
 
-        public bool CompressionEnabled => CompressionThreshold > 0;
-        public uint CompressionThreshold { get; private set; }
-
         private Encoding Encoding { get; } = Encoding.UTF8;
 
         #endregion
@@ -57,11 +54,6 @@ namespace PokeD.SCON.IO
             _aesStream = new BouncyCastleAES(_tcp, key);
 
             EncryptionEnabled = true;
-        }
-
-        public void SetCompression(uint threshold)
-        {
-            CompressionThreshold = threshold;
         }
 
 
