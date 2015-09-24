@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-
+using PokeD.Core.Data;
 using PokeD.Core.Interfaces;
 using PokeD.Core.Packets;
 using PokeD.Core.Packets.SCON;
@@ -16,7 +16,7 @@ namespace PokeD.SCON
 {
     public partial class SCONClient : IClient
     {
-        string Password { get; set; }
+        PasswordStorage Password { get; set; }
 
         INetworkTCPClient Client { get; set; }
         IPacketStream Stream { get; set; }
@@ -34,7 +34,7 @@ namespace PokeD.SCON
             Stream = new ProtobufStream(Client);
         }
 
-        public IClient Initialize(string password)
+        public IClient Initialize(PasswordStorage password)
         {
             Password = password;
 
@@ -142,16 +142,16 @@ namespace PokeD.SCON
 
 
                 case SCONPacketTypes.AuthorizationComplete:
-                    HandleAuthorizationComplete((AuthorizationCompletePacket)packet);
+                    HandleAuthorizationComplete((AuthorizationCompletePacket) packet);
                     break;
 
                 case SCONPacketTypes.AuthorizationDisconnect:
-                    HandleAuthorizationDisconnect((AuthorizationDisconnectPacket)packet);
+                    HandleAuthorizationDisconnect((AuthorizationDisconnectPacket) packet);
                     break;
 
 
                 case SCONPacketTypes.PlayerListResponse:
-                    HandlePlayerListResponse((PlayerListResponsePacket)packet);
+                    HandlePlayerListResponse((PlayerListResponsePacket) packet);
                     break;
 
 
@@ -166,20 +166,20 @@ namespace PokeD.SCON
 
 
                 case SCONPacketTypes.LogListResponse:
-                    HandleLogListResponse((LogListResponsePacket)packet);
+                    HandleLogListResponse((LogListResponsePacket) packet);
                     break;
 
                 case SCONPacketTypes.LogFileResponse:
-                    HandleLogFileResponse((LogFileResponsePacket)packet);
+                    HandleLogFileResponse((LogFileResponsePacket) packet);
                     break;
 
 
                 case SCONPacketTypes.CrashLogListResponse:
-                    HandleCrashLogListResponse((CrashLogListResponsePacket)packet);
+                    HandleCrashLogListResponse((CrashLogListResponsePacket) packet);
                     break;
 
                 case SCONPacketTypes.CrashLogFileResponse:
-                    HandleCrashLogFileResponse((CrashLogFileResponsePacket)packet);
+                    HandleCrashLogFileResponse((CrashLogFileResponsePacket) packet);
                     break;
             }
         }
@@ -200,7 +200,7 @@ namespace PokeD.SCON
 
         public void Authorize()
         {
-            SendPacket(new AuthorizationPasswordPacket { Password = Password });
+            SendPacket(new AuthorizationPasswordPacket { PasswordHash = Password.Hash });
         }
         public void EnableEncryption()
         {

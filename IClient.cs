@@ -1,5 +1,5 @@
 ﻿using System;
-
+using PokeD.Core.Data;
 using PokeD.Core.Interfaces;
 
 namespace PokeD.SCON
@@ -9,7 +9,7 @@ namespace PokeD.SCON
         void Connect(string ip, ushort port);
         void Disconnect();
 
-        IClient Initialize(string password);
+        IClient Initialize(PasswordStorage password);
 
         void Authorize();
         void EnableEncryption();
