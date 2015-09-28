@@ -1,21 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+
 using PokeD.Core.Data;
 using PokeD.Core.Interfaces;
 using PokeD.Core.Packets;
-using PokeD.Core.Packets.SCON;
+
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
 using PokeD.Core.Wrappers;
 
-using PokeD.SCON.Exceptions;
 using PokeD.SCON.IO;
+using PokeD.SCON.UILibrary;
 
 namespace PokeD.SCON
 {
     public partial class SCONClient : IClient
     {
+        BasicUIViewModel BasicUIVM { get; set; }
+
         PasswordStorage Password { get; set; }
 
         INetworkTCPClient Client { get; set; }
@@ -28,32 +32,87 @@ namespace PokeD.SCON
         // -- Debug -- //
 #endif
 
-        public SCONClient()
+        public SCONClient(BasicUIViewModel basicUIvm)
         {
+            BasicUIVM = basicUIvm;
+            BasicUIVM.OnConnect += BasicUIViewModel_OnConnect;
+            BasicUIVM.OnDisconnect += BasicUIViewModel_OnDisconnect;
+
+            BasicUIVM.TabChanged += BasicUIViewModel_TabChanged;
+
+            BasicUIVM.OnGetLog += BasicUIViewModel_GetLog;
+            BasicUIVM.OnGetCrashLog += BasicUIViewModel_GetCrashLog;
+
             Client = NetworkTCPClientWrapper.NewInstance();
             Stream = new ProtobufStream(Client);
         }
+        private bool BasicUIViewModel_OnConnect(string ip, ushort port, string password, bool autoReconnect)
+        {
+            try
+            {
+                Password = new PasswordStorage(password);
+                if (Stream.Connected)
+                    Disconnect();
+                
+                Stream.Connect(ip, port);
+
+                SendPacket(new AuthorizationRequestPacket());
+
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+        private bool BasicUIViewModel_OnDisconnect()
+        {
+            try
+            {
+                if (Stream.Connected)
+                    Disconnect();
+                
+                return true;
+            }
+            catch (Exception) { return false; }
+        }
+        private void BasicUIViewModel_TabChanged(string tabName)
+        {
+            switch (tabName)
+            {
+                case "Players":
+                    break;
+
+                case "Bans":
+                    break;
+
+                case "Player Database":
+                    break;
+
+                case "Logs":
+                    SendPacket(new LogListRequestPacket());
+                    break;
+
+                case "Crash Logs":
+                    SendPacket(new CrashLogListRequestPacket());
+                    break;
+
+                case "Settings":
+                    break;
+            }
+        }
+        private void BasicUIViewModel_GetLog(int index)
+        {
+            SendPacket(new LogFileRequestPacket { LogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
+        }
+        private void BasicUIViewModel_GetCrashLog(int index)
+        {
+            SendPacket(new CrashLogFileRequestPacket { CrashLogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
+        }
+
 
         public IClient Initialize(PasswordStorage password)
         {
             Password = password;
 
             return this;
-        }
-
-
-        public void Connect(string ip, ushort port)
-        {
-            if (Stream.Connected)
-                Disconnect();
-
-            Stream.Connect(ip, port);
-
-            SendPacket(new AuthorizationRequestPacket());
-        }
-        public void Disconnect()
-        {
-            Stream.Disconnect();
         }
 
 
@@ -86,11 +145,6 @@ namespace PokeD.SCON
             }
         }
 
-        /// <summary>
-        /// Data is handled here.
-        /// </summary>
-        /// <param name="id">Packet ID</param>
-        /// <param name="data">Packet byte[] data</param>
         private void HandleData(byte[] data)
         {
             if (data == null)
@@ -122,11 +176,6 @@ namespace PokeD.SCON
 #endif
             }
         }
-
-        /// <summary>
-        /// Packets are handled here.
-        /// </summary>
-        /// <param name="packet">Packet</param>
         private void HandlePacket(ProtobufPacket packet)
         {
             switch ((SCONPacketTypes) packet.ID)
@@ -150,18 +199,13 @@ namespace PokeD.SCON
                     break;
 
 
-                case SCONPacketTypes.PlayerListResponse:
-                    HandlePlayerListResponse((PlayerListResponsePacket) packet);
-                    break;
-
-
                 case SCONPacketTypes.ChatMessage:
                     HandleChatMessage((ChatMessagePacket) packet);
                     break;
 
 
-                case SCONPacketTypes.PlayerLocationResponse:
-                    HandlePlayerLocationResponse((PlayerLocationResponsePacket) packet);
+                case SCONPacketTypes.PlayerInfoListResponse:
+                    HandlePlayerInfoListResponse((PlayerInfoListResponsePacket) packet);
                     break;
 
 
@@ -181,11 +225,16 @@ namespace PokeD.SCON
                 case SCONPacketTypes.CrashLogFileResponse:
                     HandleCrashLogFileResponse((CrashLogFileResponsePacket) packet);
                     break;
+
+
+                case SCONPacketTypes.PlayerDatabaseListResponse:
+                    HandlePlayerDatabaseListResponse((PlayerDatabaseListResponsePacket) packet);
+                    break;
             }
         }
 
 
-        public void SendPacket(ProtobufPacket packet)
+        private void SendPacket(ProtobufPacket packet)
         {
             if (Stream.Connected)
             {
@@ -198,35 +247,17 @@ namespace PokeD.SCON
         }
 
 
-        public void Authorize()
+        private void DisplayMessage(string message)
         {
-            SendPacket(new AuthorizationPasswordPacket { PasswordHash = Password.Hash });
-        }
-        public void EnableEncryption()
-        {
-            SendPacket(new EncryptionRequestPacket());
-        }
-        public void SendPlayerListRequest()
-        {
-            SendPacket(new PlayerListRequestPacket());
-        }
-        public void ExecuteCommand(string command)
-        {
-            SendPacket(new ExecuteCommandPacket { Command = command });
+            BasicUIVM.DisplayMessage(message);
         }
 
-        public void q1()
+
+        private void Disconnect()
         {
-            SendPacket(new CrashLogListRequestPacket());
+            Stream.Disconnect();
         }
-        public void q2()
-        {
-            SendPacket(new LogListRequestPacket());
-        }
-        public void q3(string s)
-        {
-            SendPacket(new LogFileRequestPacket { LogFilename = s });
-        }
+
 
         public void Dispose()
         {

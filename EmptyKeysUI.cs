@@ -5,9 +5,11 @@ using EmptyKeys.UserInterface.Debug;
 using EmptyKeys.UserInterface.Generated;
 using EmptyKeys.UserInterface.Input;
 using EmptyKeys.UserInterface.Media;
-using GameUILibrary;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
+using PokeD.SCON.UILibrary;
 
 namespace PokeD.SCON
 {
@@ -22,7 +24,9 @@ namespace PokeD.SCON
         BasicUIViewModel ViewModel { get; set; }
         DebugViewModel DebugViewMode { get; set; }
 
-        public EmptyKeysUI(ref Action<Rectangle> onResize)
+        SCONClient SCONClient { get; set; }
+
+        public EmptyKeysUI(ref Action<Rectangle> onClientSizeChanged)
         {
             Content.RootDirectory = "Content";
 
@@ -30,7 +34,7 @@ namespace PokeD.SCON
             Graphics.PreparingDeviceSettings += Graphics_PreparingDeviceSettings;
             Graphics.DeviceCreated += Graphics_DeviceCreated;
 
-            onResize += Window_ClientSizeChanged;
+            onClientSizeChanged += Window_ClientSizeChanged;
         }
         private void Graphics_DeviceCreated(object sender, EventArgs e)
         {
@@ -77,13 +81,11 @@ namespace PokeD.SCON
             ImageManager.Instance.LoadImages(Content);
             SoundManager.Instance.LoadSounds(Content);
 
-            BasicUI.InputBindings.Add(new KeyBinding(new RelayCommand(ExitEvent), KeyCode.Escape, ModifierKeys.None));
+            BasicUI.InputBindings.Add(new KeyBinding(new RelayCommand(o => Exit()), KeyCode.Escape, ModifierKeys.None));
+
+            SCONClient = new SCONClient(ViewModel);
 
             base.LoadContent();
-        }
-        private void ExitEvent(object parameter)
-        {
-            Exit();
         }
 
         protected override void UnloadContent()
@@ -93,6 +95,8 @@ namespace PokeD.SCON
 
         protected override void Update(GameTime gameTime)
         {
+            SCONClient.Update();
+
             DebugViewMode.Update();
             BasicUI.UpdateInput(gameTime.ElapsedGameTime.TotalMilliseconds);
 
@@ -104,7 +108,7 @@ namespace PokeD.SCON
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             BasicUI.Draw(gameTime.ElapsedGameTime.TotalMilliseconds);
             DebugViewMode.Draw();

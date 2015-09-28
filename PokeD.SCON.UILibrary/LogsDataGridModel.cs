@@ -1,9 +1,8 @@
-﻿namespace GameUILibrary
+﻿namespace PokeD.SCON.UILibrary
 {
     public class LogsDataGridModel
     {
-        public uint Number { get; set; }
-
+        public int Number { get; set; }
         public string LogFilename { get; set; }
     }
 }

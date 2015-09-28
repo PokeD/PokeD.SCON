@@ -40,7 +40,7 @@
       <Name>PokeD.Core</Name>
     </ProjectReference>
     <ProjectReference Include="PokeD.SCON.UILibrary\PokeD.SCON.UILibrary.csproj">
-      <Project>{b7ea1ea9-7be6-4222-a232-3c3136ef0633}</Project>
+      <Project>{B7EA1EA9-7BE6-4222-A232-3C3136EF0633}</Project>
       <Name>PokeD.SCON.UILibrary</Name>
     </ProjectReference>
   </ItemGroup>
@@ -81,6 +81,9 @@
       <HintPath>..\packages\MonoGame.Framework.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -37,6 +37,7 @@
     <Compile Include="BasicUIViewModel.cs" />
     <Compile Include="GeneratedUI\BasicUI.xaml.cs" />
     <Compile Include="LogsDataGridModel.cs" />
+    <Compile Include="PlayersDatabaseDataGridModel.cs" />
     <Compile Include="PlayersDataGridModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,6 +59,7 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

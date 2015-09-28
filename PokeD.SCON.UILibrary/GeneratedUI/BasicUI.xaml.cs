@@ -33,6 +33,12 @@ namespace EmptyKeys.UserInterface.Generated {
         
         private TextBox SCON_Password_TextBox;
         
+        private TextBox ServerIP_Watermark_TextBox;
+        
+        private TextBox ServerPort_Watermark_TextBox;
+        
+        private TextBox SCON_Password_Watermark_TextBox;
+        
         private CheckBox AutoReconnect_CheckBox;
         
         private Button Connect_Button;
@@ -97,9 +103,14 @@ namespace EmptyKeys.UserInterface.Generated {
             this.ServerIP_TextBox.Margin = new Thickness(10F, 175F, 0F, 0F);
             this.ServerIP_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.ServerIP_TextBox.VerticalAlignment = VerticalAlignment.Top;
-            ToolTip tt_ServerIP_TextBox = new ToolTip();
-            this.ServerIP_TextBox.ToolTip = tt_ServerIP_TextBox;
-            tt_ServerIP_TextBox.Content = "Host";
+            EventTrigger ServerIP_TextBox_ET_0 = new EventTrigger(TextBox.GotFocusEvent, this.ServerIP_TextBox);
+            ServerIP_TextBox.Triggers.Add(ServerIP_TextBox_ET_0);
+            EventTrigger.SetCommandPath(ServerIP_TextBox_ET_0, "WatermarkGotFocus");
+            EventTrigger.SetCommandParameter(ServerIP_TextBox_ET_0, "ServerIP");
+            EventTrigger ServerIP_TextBox_ET_1 = new EventTrigger(TextBox.LostFocusEvent, this.ServerIP_TextBox);
+            ServerIP_TextBox.Triggers.Add(ServerIP_TextBox_ET_1);
+            EventTrigger.SetCommandPath(ServerIP_TextBox_ET_1, "WatermarkLostFocus");
+            EventTrigger.SetCommandParameter(ServerIP_TextBox_ET_1, "ServerIP");
             Binding binding_ServerIP_TextBox_Text = new Binding("ServerIP");
             this.ServerIP_TextBox.SetBinding(TextBox.TextProperty, binding_ServerIP_TextBox_Text);
             // ServerPort_TextBox element
@@ -111,9 +122,14 @@ namespace EmptyKeys.UserInterface.Generated {
             this.ServerPort_TextBox.Margin = new Thickness(10F, 205F, 0F, 0F);
             this.ServerPort_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.ServerPort_TextBox.VerticalAlignment = VerticalAlignment.Top;
-            ToolTip tt_ServerPort_TextBox = new ToolTip();
-            this.ServerPort_TextBox.ToolTip = tt_ServerPort_TextBox;
-            tt_ServerPort_TextBox.Content = "Port";
+            EventTrigger ServerPort_TextBox_ET_0 = new EventTrigger(TextBox.GotFocusEvent, this.ServerPort_TextBox);
+            ServerPort_TextBox.Triggers.Add(ServerPort_TextBox_ET_0);
+            EventTrigger.SetCommandPath(ServerPort_TextBox_ET_0, "WatermarkGotFocus");
+            EventTrigger.SetCommandParameter(ServerPort_TextBox_ET_0, "ServerPort");
+            EventTrigger ServerPort_TextBox_ET_1 = new EventTrigger(TextBox.LostFocusEvent, this.ServerPort_TextBox);
+            ServerPort_TextBox.Triggers.Add(ServerPort_TextBox_ET_1);
+            EventTrigger.SetCommandPath(ServerPort_TextBox_ET_1, "WatermarkLostFocus");
+            EventTrigger.SetCommandParameter(ServerPort_TextBox_ET_1, "ServerPort");
             Binding binding_ServerPort_TextBox_Text = new Binding("ServerPort");
             this.ServerPort_TextBox.SetBinding(TextBox.TextProperty, binding_ServerPort_TextBox_Text);
             // SCON_Password_TextBox element
@@ -125,11 +141,58 @@ namespace EmptyKeys.UserInterface.Generated {
             this.SCON_Password_TextBox.Margin = new Thickness(10F, 235F, 0F, 0F);
             this.SCON_Password_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.SCON_Password_TextBox.VerticalAlignment = VerticalAlignment.Top;
-            ToolTip tt_SCON_Password_TextBox = new ToolTip();
-            this.SCON_Password_TextBox.ToolTip = tt_SCON_Password_TextBox;
-            tt_SCON_Password_TextBox.Content = "Password";
+            EventTrigger SCON_Password_TextBox_ET_0 = new EventTrigger(TextBox.GotFocusEvent, this.SCON_Password_TextBox);
+            SCON_Password_TextBox.Triggers.Add(SCON_Password_TextBox_ET_0);
+            EventTrigger.SetCommandPath(SCON_Password_TextBox_ET_0, "WatermarkGotFocus");
+            EventTrigger.SetCommandParameter(SCON_Password_TextBox_ET_0, "SCON_Password");
+            EventTrigger SCON_Password_TextBox_ET_1 = new EventTrigger(TextBox.LostFocusEvent, this.SCON_Password_TextBox);
+            SCON_Password_TextBox.Triggers.Add(SCON_Password_TextBox_ET_1);
+            EventTrigger.SetCommandPath(SCON_Password_TextBox_ET_1, "WatermarkLostFocus");
+            EventTrigger.SetCommandParameter(SCON_Password_TextBox_ET_1, "SCON_Password");
             Binding binding_SCON_Password_TextBox_Text = new Binding("SCON_Password");
             this.SCON_Password_TextBox.SetBinding(TextBox.TextProperty, binding_SCON_Password_TextBox_Text);
+            // ServerIP_Watermark_TextBox element
+            this.ServerIP_Watermark_TextBox = new TextBox();
+            this.e_0.Children.Add(this.ServerIP_Watermark_TextBox);
+            this.ServerIP_Watermark_TextBox.Name = "ServerIP_Watermark_TextBox";
+            this.ServerIP_Watermark_TextBox.Height = 25F;
+            this.ServerIP_Watermark_TextBox.Width = 160F;
+            this.ServerIP_Watermark_TextBox.IsEnabled = false;
+            this.ServerIP_Watermark_TextBox.IsHitTestVisible = false;
+            this.ServerIP_Watermark_TextBox.Margin = new Thickness(10F, 175F, 0F, 0F);
+            this.ServerIP_Watermark_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
+            this.ServerIP_Watermark_TextBox.VerticalAlignment = VerticalAlignment.Top;
+            this.ServerIP_Watermark_TextBox.Text = "Server IP";
+            Binding binding_ServerIP_Watermark_TextBox_Visibility = new Binding("ServerIP_Watermark");
+            this.ServerIP_Watermark_TextBox.SetBinding(TextBox.VisibilityProperty, binding_ServerIP_Watermark_TextBox_Visibility);
+            // ServerPort_Watermark_TextBox element
+            this.ServerPort_Watermark_TextBox = new TextBox();
+            this.e_0.Children.Add(this.ServerPort_Watermark_TextBox);
+            this.ServerPort_Watermark_TextBox.Name = "ServerPort_Watermark_TextBox";
+            this.ServerPort_Watermark_TextBox.Height = 25F;
+            this.ServerPort_Watermark_TextBox.Width = 160F;
+            this.ServerPort_Watermark_TextBox.IsEnabled = false;
+            this.ServerPort_Watermark_TextBox.IsHitTestVisible = false;
+            this.ServerPort_Watermark_TextBox.Margin = new Thickness(10F, 205F, 0F, 0F);
+            this.ServerPort_Watermark_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
+            this.ServerPort_Watermark_TextBox.VerticalAlignment = VerticalAlignment.Top;
+            this.ServerPort_Watermark_TextBox.Text = "Server Port";
+            Binding binding_ServerPort_Watermark_TextBox_Visibility = new Binding("ServerPort_Watermark");
+            this.ServerPort_Watermark_TextBox.SetBinding(TextBox.VisibilityProperty, binding_ServerPort_Watermark_TextBox_Visibility);
+            // SCON_Password_Watermark_TextBox element
+            this.SCON_Password_Watermark_TextBox = new TextBox();
+            this.e_0.Children.Add(this.SCON_Password_Watermark_TextBox);
+            this.SCON_Password_Watermark_TextBox.Name = "SCON_Password_Watermark_TextBox";
+            this.SCON_Password_Watermark_TextBox.Height = 25F;
+            this.SCON_Password_Watermark_TextBox.Width = 160F;
+            this.SCON_Password_Watermark_TextBox.IsEnabled = false;
+            this.SCON_Password_Watermark_TextBox.IsHitTestVisible = false;
+            this.SCON_Password_Watermark_TextBox.Margin = new Thickness(10F, 235F, 0F, 0F);
+            this.SCON_Password_Watermark_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
+            this.SCON_Password_Watermark_TextBox.VerticalAlignment = VerticalAlignment.Top;
+            this.SCON_Password_Watermark_TextBox.Text = "SCON Password";
+            Binding binding_SCON_Password_Watermark_TextBox_Visibility = new Binding("SCON_Password_Watermark");
+            this.SCON_Password_Watermark_TextBox.SetBinding(TextBox.VisibilityProperty, binding_SCON_Password_Watermark_TextBox_Visibility);
             // AutoReconnect_CheckBox element
             this.AutoReconnect_CheckBox = new CheckBox();
             this.e_0.Children.Add(this.AutoReconnect_CheckBox);
@@ -153,9 +216,9 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Connect_Button.VerticalAlignment = VerticalAlignment.Top;
             this.Connect_Button.Content = "Connect";
             this.Connect_Button.CommandParameter = "Connect";
-            Binding binding_Connect_Button_IsEnabled = new Binding("ConnectButtonVisible.Value");
+            Binding binding_Connect_Button_IsEnabled = new Binding("IsConnectButtonVisible.Value");
             this.Connect_Button.SetBinding(Button.IsEnabledProperty, binding_Connect_Button_IsEnabled);
-            Binding binding_Connect_Button_IsHitTestVisible = new Binding("ConnectButtonVisible.Value");
+            Binding binding_Connect_Button_IsHitTestVisible = new Binding("IsConnectButtonVisible.Value");
             this.Connect_Button.SetBinding(Button.IsHitTestVisibleProperty, binding_Connect_Button_IsHitTestVisible);
             Binding binding_Connect_Button_Command = new Binding("ButtonCommand");
             this.Connect_Button.SetBinding(Button.CommandProperty, binding_Connect_Button_Command);
@@ -169,9 +232,9 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Disconnect_Button.VerticalAlignment = VerticalAlignment.Top;
             this.Disconnect_Button.Content = "Disconnect";
             this.Disconnect_Button.CommandParameter = "Disconnect";
-            Binding binding_Disconnect_Button_IsEnabled = new Binding("ConnectButtonVisible.Invert");
+            Binding binding_Disconnect_Button_IsEnabled = new Binding("IsConnectButtonVisible.Invert");
             this.Disconnect_Button.SetBinding(Button.IsEnabledProperty, binding_Disconnect_Button_IsEnabled);
-            Binding binding_Disconnect_Button_IsHitTestVisible = new Binding("ConnectButtonVisible.Invert");
+            Binding binding_Disconnect_Button_IsHitTestVisible = new Binding("IsConnectButtonVisible.Invert");
             this.Disconnect_Button.SetBinding(Button.IsHitTestVisibleProperty, binding_Disconnect_Button_IsHitTestVisible);
             Binding binding_Disconnect_Button_Command = new Binding("ButtonCommand");
             this.Disconnect_Button.SetBinding(Button.CommandProperty, binding_Disconnect_Button_Command);
@@ -185,9 +248,9 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Refresh_Button.VerticalAlignment = VerticalAlignment.Top;
             this.Refresh_Button.Content = "Refresh (F5)";
             this.Refresh_Button.CommandParameter = "Refresh";
-            Binding binding_Refresh_Button_IsEnabled = new Binding("ConnectButtonVisible.Invert");
+            Binding binding_Refresh_Button_IsEnabled = new Binding("IsConnectButtonVisible.Invert");
             this.Refresh_Button.SetBinding(Button.IsEnabledProperty, binding_Refresh_Button_IsEnabled);
-            Binding binding_Refresh_Button_IsHitTestVisible = new Binding("ConnectButtonVisible.Invert");
+            Binding binding_Refresh_Button_IsHitTestVisible = new Binding("IsConnectButtonVisible.Invert");
             this.Refresh_Button.SetBinding(Button.IsHitTestVisibleProperty, binding_Refresh_Button_IsHitTestVisible);
             Binding binding_Refresh_Button_Command = new Binding("ButtonCommand");
             this.Refresh_Button.SetBinding(Button.CommandProperty, binding_Refresh_Button_Command);
@@ -210,13 +273,15 @@ namespace EmptyKeys.UserInterface.Generated {
             this.TabControl.Margin = new Thickness(175F, 10F, 10F, 135F);
             this.TabControl.Foreground = new SolidColorBrush(new ColorW(33, 9, 9, 255));
             this.TabControl.ItemsSource = Get_TabControl_Items();
+            Binding binding_TabControl_SelectedItem = new Binding("TabSelectedItem");
+            this.TabControl.SetBinding(TabControl.SelectedItemProperty, binding_TabControl_SelectedItem);
             // Search_TextBlock element
             this.Search_TextBlock = new TextBlock();
             this.e_0.Children.Add(this.Search_TextBlock);
             this.Search_TextBlock.Name = "Search_TextBlock";
             this.Search_TextBlock.Height = 25F;
-            this.Search_TextBlock.Width = 60F;
-            this.Search_TextBlock.Margin = new Thickness(180F, 0F, 0F, 105F);
+            this.Search_TextBlock.Width = 65F;
+            this.Search_TextBlock.Margin = new Thickness(175F, 0F, 0F, 105F);
             this.Search_TextBlock.HorizontalAlignment = HorizontalAlignment.Left;
             this.Search_TextBlock.VerticalAlignment = VerticalAlignment.Bottom;
             this.Search_TextBlock.Text = "Search:";
@@ -226,7 +291,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.e_0.Children.Add(this.Search_ComboBox);
             this.Search_ComboBox.Name = "Search_ComboBox";
             this.Search_ComboBox.Height = 25F;
-            this.Search_ComboBox.Width = 120F;
+            this.Search_ComboBox.Width = 115F;
             this.Search_ComboBox.Margin = new Thickness(245F, 0F, 0F, 105F);
             this.Search_ComboBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.Search_ComboBox.VerticalAlignment = VerticalAlignment.Bottom;
@@ -240,16 +305,13 @@ namespace EmptyKeys.UserInterface.Generated {
             this.e_0.Children.Add(this.Search_TextBox);
             this.Search_TextBox.Name = "Search_TextBox";
             this.Search_TextBox.Height = 25F;
-            this.Search_TextBox.Margin = new Thickness(370F, 0F, 110F, 105F);
+            this.Search_TextBox.Margin = new Thickness(365F, 0F, 100F, 105F);
             this.Search_TextBox.VerticalAlignment = VerticalAlignment.Bottom;
-            this.Search_TextBox.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            this.Search_TextBox.VerticalContentAlignment = VerticalAlignment.Bottom;
             // AutoRefresh_CheckBox element
             this.AutoRefresh_CheckBox = new CheckBox();
             this.e_0.Children.Add(this.AutoRefresh_CheckBox);
             this.AutoRefresh_CheckBox.Name = "AutoRefresh_CheckBox";
             this.AutoRefresh_CheckBox.Height = 25F;
-            this.AutoRefresh_CheckBox.Width = 95F;
             this.AutoRefresh_CheckBox.Margin = new Thickness(0F, 0F, 10F, 105F);
             this.AutoRefresh_CheckBox.HorizontalAlignment = HorizontalAlignment.Right;
             this.AutoRefresh_CheckBox.VerticalAlignment = VerticalAlignment.Bottom;
@@ -259,12 +321,9 @@ namespace EmptyKeys.UserInterface.Generated {
             this.e_0.Children.Add(this.ConsoleOutput_TextBlock);
             this.ConsoleOutput_TextBlock.Name = "ConsoleOutput_TextBlock";
             this.ConsoleOutput_TextBlock.Height = 90F;
-            this.ConsoleOutput_TextBlock.Width = 610F;
-            this.ConsoleOutput_TextBlock.Margin = new Thickness(0F, 0F, 10F, 10F);
-            this.ConsoleOutput_TextBlock.HorizontalAlignment = HorizontalAlignment.Right;
+            this.ConsoleOutput_TextBlock.Margin = new Thickness(175F, 0F, 10F, 10F);
             this.ConsoleOutput_TextBlock.VerticalAlignment = VerticalAlignment.Bottom;
             this.ConsoleOutput_TextBlock.Text = "Test 123\r\nTest 132\r\nTest 231\r\nTest 213\r\nTest 321\r\n";
-            this.ConsoleOutput_TextBlock.TextAlignment = TextAlignment.Left;
             ImageManager.Instance.AddImage("Images/PokeD Logo");
             FontManager.Instance.AddFont("Segoe UI", 12F, FontStyle.Regular, "Segoe_UI_9_Regular");
         }
@@ -283,7 +342,6 @@ namespace EmptyKeys.UserInterface.Generated {
             DataGrid PlayersDataGrid = new DataGrid();
             e_2.Children.Add(PlayersDataGrid);
             PlayersDataGrid.Name = "PlayersDataGrid";
-            PlayersDataGrid.Margin = new Thickness(0F, 0F, 0F, 0F);
             PlayersDataGrid.AutoGenerateColumns = false;
             DataGridTextColumn PlayersDataGrid_Col0 = new DataGridTextColumn();
             PlayersDataGrid_Col0.Header = "#";
@@ -325,8 +383,6 @@ namespace EmptyKeys.UserInterface.Generated {
             DataGrid BansDataGrid = new DataGrid();
             e_4.Children.Add(BansDataGrid);
             BansDataGrid.Name = "BansDataGrid";
-            BansDataGrid.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            BansDataGrid.VerticalContentAlignment = VerticalAlignment.Stretch;
             BansDataGrid.AutoGenerateColumns = false;
             DataGridTextColumn BansDataGrid_Col0 = new DataGridTextColumn();
             BansDataGrid_Col0.Header = "#";
@@ -363,8 +419,6 @@ namespace EmptyKeys.UserInterface.Generated {
             DataGrid PlayersDatabaseDataGrid = new DataGrid();
             e_6.Children.Add(PlayersDatabaseDataGrid);
             PlayersDatabaseDataGrid.Name = "PlayersDatabaseDataGrid";
-            PlayersDatabaseDataGrid.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            PlayersDatabaseDataGrid.VerticalContentAlignment = VerticalAlignment.Stretch;
             PlayersDatabaseDataGrid.AutoGenerateColumns = false;
             DataGridTextColumn PlayersDatabaseDataGrid_Col0 = new DataGridTextColumn();
             PlayersDatabaseDataGrid_Col0.Header = "#";
@@ -372,31 +426,26 @@ namespace EmptyKeys.UserInterface.Generated {
             PlayersDatabaseDataGrid_Col0.Binding = PlayersDatabaseDataGrid_Col0_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col0);
             DataGridTextColumn PlayersDatabaseDataGrid_Col1 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col1.Header = "Last IP";
-            Binding PlayersDatabaseDataGrid_Col1_b = new Binding("LastIP");
+            PlayersDatabaseDataGrid_Col1.Header = "Name";
+            Binding PlayersDatabaseDataGrid_Col1_b = new Binding("Name");
             PlayersDatabaseDataGrid_Col1.Binding = PlayersDatabaseDataGrid_Col1_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col1);
             DataGridTextColumn PlayersDatabaseDataGrid_Col2 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col2.Header = "Last Seen";
-            Binding PlayersDatabaseDataGrid_Col2_b = new Binding("LastSeen");
+            PlayersDatabaseDataGrid_Col2.Header = "Game Jolt ID";
+            Binding PlayersDatabaseDataGrid_Col2_b = new Binding("GameJoltID");
             PlayersDatabaseDataGrid_Col2.Binding = PlayersDatabaseDataGrid_Col2_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col2);
             DataGridTextColumn PlayersDatabaseDataGrid_Col3 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col3.Header = "Game Jolt ID";
-            Binding PlayersDatabaseDataGrid_Col3_b = new Binding("GameJoltID");
+            PlayersDatabaseDataGrid_Col3.Header = "Last IP";
+            Binding PlayersDatabaseDataGrid_Col3_b = new Binding("LastIP");
             PlayersDatabaseDataGrid_Col3.Binding = PlayersDatabaseDataGrid_Col3_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col3);
             DataGridTextColumn PlayersDatabaseDataGrid_Col4 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col4.Header = "Name";
-            Binding PlayersDatabaseDataGrid_Col4_b = new Binding("Name");
+            PlayersDatabaseDataGrid_Col4.Header = "Last Seen";
+            Binding PlayersDatabaseDataGrid_Col4_b = new Binding("LastSeen");
             PlayersDatabaseDataGrid_Col4.Binding = PlayersDatabaseDataGrid_Col4_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col4);
-            DataGridTextColumn PlayersDatabaseDataGrid_Col5 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col5.Header = "Online";
-            Binding PlayersDatabaseDataGrid_Col5_b = new Binding("Online");
-            PlayersDatabaseDataGrid_Col5.Binding = PlayersDatabaseDataGrid_Col5_b;
-            PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col5);
-            Binding binding_PlayersDatabaseDataGrid_ItemsSource = new Binding("BansGridDataList");
+            Binding binding_PlayersDatabaseDataGrid_ItemsSource = new Binding("PlayersDatabaseGridDataList");
             PlayersDatabaseDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding_PlayersDatabaseDataGrid_ItemsSource);
             items.Add(e_5);
             // e_7 element
@@ -412,8 +461,6 @@ namespace EmptyKeys.UserInterface.Generated {
             e_8.Children.Add(LogsDataGrid);
             LogsDataGrid.Name = "LogsDataGrid";
             LogsDataGrid.Margin = new Thickness(0F, 0F, 0F, 37F);
-            LogsDataGrid.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            LogsDataGrid.VerticalContentAlignment = VerticalAlignment.Stretch;
             LogsDataGrid.AutoGenerateColumns = false;
             DataGridTextColumn LogsDataGrid_Col0 = new DataGridTextColumn();
             LogsDataGrid_Col0.Header = "#";
@@ -421,56 +468,78 @@ namespace EmptyKeys.UserInterface.Generated {
             LogsDataGrid_Col0.Binding = LogsDataGrid_Col0_b;
             LogsDataGrid.Columns.Add(LogsDataGrid_Col0);
             DataGridTextColumn LogsDataGrid_Col1 = new DataGridTextColumn();
-            LogsDataGrid_Col1.Header = "Log File Name";
+            LogsDataGrid_Col1.Header = "Log Filename";
             Binding LogsDataGrid_Col1_b = new Binding("LogFilename");
             LogsDataGrid_Col1.Binding = LogsDataGrid_Col1_b;
             LogsDataGrid.Columns.Add(LogsDataGrid_Col1);
             Binding binding_LogsDataGrid_ItemsSource = new Binding("LogsGridDataList");
             LogsDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding_LogsDataGrid_ItemsSource);
-            // button element
-            Button button = new Button();
-            e_8.Children.Add(button);
-            button.Name = "button";
-            button.Width = 75F;
-            button.Margin = new Thickness(0F, 0F, 10F, 10F);
-            button.HorizontalAlignment = HorizontalAlignment.Right;
-            button.VerticalAlignment = VerticalAlignment.Bottom;
-            button.HorizontalContentAlignment = HorizontalAlignment.Center;
-            button.VerticalContentAlignment = VerticalAlignment.Center;
-            button.Content = "Get Log";
+            Binding binding_LogsDataGrid_SelectedIndex = new Binding("TabItemSelectedIndex");
+            LogsDataGrid.SetBinding(DataGrid.SelectedIndexProperty, binding_LogsDataGrid_SelectedIndex);
+            // GetLog_Button element
+            Button GetLog_Button = new Button();
+            e_8.Children.Add(GetLog_Button);
+            GetLog_Button.Name = "GetLog_Button";
+            GetLog_Button.Width = 110F;
+            GetLog_Button.Margin = new Thickness(0F, 0F, 10F, 10F);
+            GetLog_Button.HorizontalAlignment = HorizontalAlignment.Right;
+            GetLog_Button.VerticalAlignment = VerticalAlignment.Bottom;
+            GetLog_Button.Content = "Get Log";
+            GetLog_Button.CommandParameter = "GetLog";
+            Binding binding_GetLog_Button_Command = new Binding("ButtonCommand");
+            GetLog_Button.SetBinding(Button.CommandProperty, binding_GetLog_Button_Command);
             items.Add(e_7);
             // e_9 element
             TabItem e_9 = new TabItem();
             e_9.Name = "e_9";
-            e_9.Header = "Settings";
+            e_9.Header = "Crash Logs";
             // e_10 element
             Grid e_10 = new Grid();
             e_9.Content = e_10;
             e_10.Name = "e_10";
-            // listBox element
-            ListBox listBox = new ListBox();
-            e_10.Children.Add(listBox);
-            listBox.Name = "listBox";
-            listBox.Height = 443F;
-            listBox.Width = 585F;
-            listBox.Margin = new Thickness(10F, 10F, 0F, 0F);
-            listBox.HorizontalAlignment = HorizontalAlignment.Left;
-            listBox.VerticalAlignment = VerticalAlignment.Top;
-            Func<UIElement, UIElement> listBox_dtFunc = listBox_dtMethod;
-            listBox.ItemTemplate = new DataTemplate(listBox_dtFunc);
-            Binding binding_listBox_ItemsSource = new Binding("PlayersGridDataList");
-            listBox.SetBinding(ListBox.ItemsSourceProperty, binding_listBox_ItemsSource);
+            // CrashLogsDataGrid element
+            DataGrid CrashLogsDataGrid = new DataGrid();
+            e_10.Children.Add(CrashLogsDataGrid);
+            CrashLogsDataGrid.Name = "CrashLogsDataGrid";
+            CrashLogsDataGrid.Margin = new Thickness(0F, 0F, 0F, 37F);
+            CrashLogsDataGrid.AutoGenerateColumns = false;
+            DataGridTextColumn CrashLogsDataGrid_Col0 = new DataGridTextColumn();
+            CrashLogsDataGrid_Col0.Header = "#";
+            Binding CrashLogsDataGrid_Col0_b = new Binding("Number");
+            CrashLogsDataGrid_Col0.Binding = CrashLogsDataGrid_Col0_b;
+            CrashLogsDataGrid.Columns.Add(CrashLogsDataGrid_Col0);
+            DataGridTextColumn CrashLogsDataGrid_Col1 = new DataGridTextColumn();
+            CrashLogsDataGrid_Col1.Header = "Crash Log Filename";
+            Binding CrashLogsDataGrid_Col1_b = new Binding("LogFilename");
+            CrashLogsDataGrid_Col1.Binding = CrashLogsDataGrid_Col1_b;
+            CrashLogsDataGrid.Columns.Add(CrashLogsDataGrid_Col1);
+            Binding binding_CrashLogsDataGrid_ItemsSource = new Binding("CrashLogsGridDataList");
+            CrashLogsDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding_CrashLogsDataGrid_ItemsSource);
+            Binding binding_CrashLogsDataGrid_SelectedIndex = new Binding("TabItemSelectedIndex");
+            CrashLogsDataGrid.SetBinding(DataGrid.SelectedIndexProperty, binding_CrashLogsDataGrid_SelectedIndex);
+            // GetCrashLog_Button element
+            Button GetCrashLog_Button = new Button();
+            e_10.Children.Add(GetCrashLog_Button);
+            GetCrashLog_Button.Name = "GetCrashLog_Button";
+            GetCrashLog_Button.Width = 110F;
+            GetCrashLog_Button.Margin = new Thickness(0F, 0F, 10F, 10F);
+            GetCrashLog_Button.HorizontalAlignment = HorizontalAlignment.Right;
+            GetCrashLog_Button.VerticalAlignment = VerticalAlignment.Bottom;
+            GetCrashLog_Button.Content = "Get Crash Log";
+            GetCrashLog_Button.CommandParameter = "GetCrashLog";
+            Binding binding_GetCrashLog_Button_Command = new Binding("ButtonCommand");
+            GetCrashLog_Button.SetBinding(Button.CommandProperty, binding_GetCrashLog_Button_Command);
             items.Add(e_9);
-            return items;
-        }
-        
-        private static UIElement listBox_dtMethod(UIElement parent) {
             // e_11 element
-            CheckBox e_11 = new CheckBox();
-            e_11.Parent = parent;
+            TabItem e_11 = new TabItem();
             e_11.Name = "e_11";
-            e_11.Content = "Tr";
-            return e_11;
+            e_11.Header = "Settings";
+            // e_12 element
+            Grid e_12 = new Grid();
+            e_11.Content = e_12;
+            e_12.Name = "e_12";
+            items.Add(e_11);
+            return items;
         }
         
         private static System.Collections.ObjectModel.ObservableCollection<object> Get_Search_ComboBox_Items() {
