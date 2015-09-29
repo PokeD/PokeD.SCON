@@ -16,14 +16,17 @@ using PokeD.SCON.UILibrary;
 
 namespace PokeD.SCON
 {
-    public partial class SCONClient : IClient
+    public partial class SCONClient : IUpdatable, IDisposable
     {
-        BasicUIViewModel BasicUIVM { get; set; }
+        BasicUIViewModel BasicUIVM { get; }
+
+
+        INetworkTCPClient Client { get; }
+        IPacketStream Stream { get; }
+
 
         PasswordStorage Password { get; set; }
-
-        INetworkTCPClient Client { get; set; }
-        IPacketStream Stream { get; set; }
+        
 
 #if DEBUG
         // -- Debug -- //
@@ -42,6 +45,8 @@ namespace PokeD.SCON
 
             BasicUIVM.OnGetLog += BasicUIViewModel_GetLog;
             BasicUIVM.OnGetCrashLog += BasicUIViewModel_GetCrashLog;
+
+            BasicUIVM.OnSaveLog += BasicUIViewModel_SaveLog;
 
             Client = NetworkTCPClientWrapper.NewInstance();
             Stream = new ProtobufStream(Client);
@@ -75,15 +80,21 @@ namespace PokeD.SCON
         }
         private void BasicUIViewModel_TabChanged(string tabName)
         {
+            if(!Stream.Connected)
+                return;
+
             switch (tabName)
             {
                 case "Players":
+                    SendPacket(new PlayerInfoListRequestPacket());
                     break;
 
                 case "Bans":
+                    SendPacket(new BanListRequestPacket());
                     break;
 
                 case "Player Database":
+                    SendPacket(new PlayerDatabaseListRequestPacket());
                     break;
 
                 case "Logs":
@@ -100,19 +111,21 @@ namespace PokeD.SCON
         }
         private void BasicUIViewModel_GetLog(int index)
         {
-            SendPacket(new LogFileRequestPacket { LogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
+            if (!Stream.Connected)
+                DisplayMessage("Not connected to server!");
+            else
+                SendPacket(new LogFileRequestPacket { LogFilename = BasicUIVM.LogsGridDataList[index].LogFilename });
         }
         private void BasicUIViewModel_GetCrashLog(int index)
         {
-            SendPacket(new CrashLogFileRequestPacket { CrashLogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
+            if (!Stream.Connected)
+                DisplayMessage("Not connected to server!");
+            else
+                SendPacket(new CrashLogFileRequestPacket { CrashLogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
         }
-
-
-        public IClient Initialize(PasswordStorage password)
+        private void BasicUIViewModel_SaveLog(string logname, string log)
         {
-            Password = password;
-
-            return this;
+            FileSystemWrapper.SaveLog(logname, log);
         }
 
 
@@ -229,6 +242,11 @@ namespace PokeD.SCON
 
                 case SCONPacketTypes.PlayerDatabaseListResponse:
                     HandlePlayerDatabaseListResponse((PlayerDatabaseListResponsePacket) packet);
+                    break;
+
+
+                case SCONPacketTypes.BanListResponse:
+                    HandleBanListResponse((BanListResponsePacket) packet);
                     break;
             }
         }

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
+
 using EmptyKeys.UserInterface;
 using EmptyKeys.UserInterface.Controls;
 using EmptyKeys.UserInterface.Input;
@@ -92,6 +91,7 @@ namespace PokeD.SCON.UILibrary
 
         #endregion Watermark
 
+
         public event Func<string, ushort, string, bool, bool> OnConnect;
         public event Func<bool> OnDisconnect;
         public event Func<bool> OnRefresh;
@@ -114,8 +114,8 @@ namespace PokeD.SCON.UILibrary
         private bool isConnectButtonVisible = true;
         public InvertableBool IsConnectButtonVisible { get { return isConnectButtonVisible; } set { SetProperty(ref isConnectButtonVisible, value); } }
 
-        private string lastRefresh = "Last Refresh:";
-        public string LastRefresh { get { return lastRefresh; } set { SetProperty(ref lastRefresh, value); } }
+        private string lastRefresh;
+        public string LastRefresh { get { return $"Last Refresh: {lastRefresh}"; } set { SetProperty(ref lastRefresh, value); } }
 
 
         public event Action<string> TabChanged;
@@ -123,6 +123,10 @@ namespace PokeD.SCON.UILibrary
 
         private ObservableCollection<PlayersDataGridModel> playersGridDataList;
         public ObservableCollection<PlayersDataGridModel> PlayersGridDataList { get { return playersGridDataList; } set { SetProperty(ref playersGridDataList, value); } }
+
+
+        private ObservableCollection<BansDataGridModel> bansGridDataList;
+        public ObservableCollection<BansDataGridModel> BansGridDataList { get { return bansGridDataList; } set { SetProperty(ref bansGridDataList, value); } }
 
 
         private ObservableCollection<PlayersDatabaseDataGridModel> playersDatabaseGridDataList;
@@ -135,9 +139,11 @@ namespace PokeD.SCON.UILibrary
         private ObservableCollection<LogsDataGridModel> crashLogsGridDataList;
         public ObservableCollection<LogsDataGridModel> CrashLogsGridDataList { get { return crashLogsGridDataList; } set { SetProperty(ref crashLogsGridDataList, value); } }
 
+        private bool isLogsButtonVisible;
+        public bool IsLogsButtonVisible { get { return isLogsButtonVisible; } set { SetProperty(ref isLogsButtonVisible, value); } }
 
-        private DataGrid dataGridProperty;
-        public DataGrid DataGridProperty { get { return dataGridProperty; } set { SetProperty(ref dataGridProperty, value); } }
+        private bool isCrashLogsButtonVisible;
+        public bool IsCrashLogsButtonVisible { get { return isCrashLogsButtonVisible; } set { SetProperty(ref isCrashLogsButtonVisible, value); } }
 
 
         private TabItem tabSelectedIndex;
@@ -164,6 +170,9 @@ namespace PokeD.SCON.UILibrary
         public event Action<int> OnGetLog;
         public event Action<int> OnGetCrashLog;
 
+        public event Action<string, string> OnSaveLog;
+
+
         public BasicUIViewModel()
         {
             CheckBoxCommand = new RelayCommand(OnCheckBox);
@@ -172,20 +181,14 @@ namespace PokeD.SCON.UILibrary
             WatermarkGotFocus = new RelayCommand(BasicUIViewModel_WatermarkGotFocus);
             WatermarkLostFocus = new RelayCommand(BasicUIViewModel_WatermarkLostFocus);
 
-            //DataGridProperty.Loaded += (s, e) => { // Column widths
-            //    DataGridProperty.Columns.AsParallel().ForAll(column => {
-            //        column.MinWidth = column.ActualWidth;
-            //        column.Width = new DataGridLength(1, DataGridLengthUnitType.Star);
-            //    });
-            //};
+            PlayersGridDataList = new ObservableCollection<PlayersDataGridModel>();
+            BansGridDataList = new ObservableCollection<BansDataGridModel>();
+            PlayersDatabaseGridDataList = new ObservableCollection<PlayersDatabaseDataGridModel>();
+            LogsGridDataList = new ObservableCollection<LogsDataGridModel>();
+            CrashLogsGridDataList = new ObservableCollection<LogsDataGridModel>();
 
-            PlayersGridDataList = new ObservableCollection<PlayersDataGridModel>
-            {
-                new PlayersDataGridModel { Number = 0, IP = "127.0.0.1", Ping = 5,  GameJoltID = 1483, Name = "Aragas", Online = true },
-                new PlayersDataGridModel { Number = 1, IP = "227.0.0.1", Ping = 15, GameJoltID = 2483, Name = "Bragas", Online = false },
-                new PlayersDataGridModel { Number = 2, IP = "327.0.0.1", Ping = 25, GameJoltID = 3483, Name = "Cragas", Online = true },
-                new PlayersDataGridModel { Number = 3, IP = "427.0.0.1", Ping = 35, GameJoltID = 4483, Name = "Dragas", Online = false }
-            };
+            LogsGridDataList.CollectionChanged += (s, a) => IsLogsButtonVisible = LogsGridDataList.Count != 0;
+            CrashLogsGridDataList.CollectionChanged += (s, a) => IsCrashLogsButtonVisible = LogsGridDataList.Count != 0;
         }
 
         private void OnButtonClick(object obj)
@@ -210,7 +213,9 @@ namespace PokeD.SCON.UILibrary
                     break;
 
                 case "Refresh":
-                    if(OnRefresh != null)
+                    LastRefresh = $"{DateTime.Now:HH:mm:ss}";
+
+                    if (OnRefresh != null)
                         OnRefresh();
                     break;
 
@@ -244,14 +249,24 @@ namespace PokeD.SCON.UILibrary
         }
 
 
-        public void DisplayLog(string log)
+        public void DisplayLog(string logname, string log)
         {
-            MessageBox.Show(log, new RelayCommand(o => {}), false);
+            //MessageBox.Show(log, new RelayCommand(o => {}), false);
+            MessageBox.Show(log, "Save log?", MessageBoxButton.YesNo, new RelayCommand(o =>
+            {
+                if (o.ToString() == "Yes")
+                    if(OnSaveLog != null)
+                        OnSaveLog(logname, log);
+            }), true);
         }
 
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message, new RelayCommand(o => { }), false);
+            //MessageBox.Show(message, "", MessageBoxButton.YesNo, new RelayCommand(o =>
+            //{
+            //    ;
+            //}), true);
         }
 
     }

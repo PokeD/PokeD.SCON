@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Org.BouncyCastle.Crypto;
+﻿using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
 using PokeD.Core;
@@ -25,6 +23,9 @@ namespace PokeD.SCON
                 return;
 
             AuthorizationStatus = packet.AuthorizationStatus;
+
+            if(!AuthorizationStatus.HasFlag(AuthorizationStatus.EncryprionEnabled))
+                SendPacket(new AuthorizationPasswordPacket { PasswordHash = Password.Hash });
         }
 
         private void HandleEncryptionRequest(EncryptionRequestPacket packet)
@@ -45,6 +46,8 @@ namespace PokeD.SCON
                 SendPacket(new EncryptionResponsePacket { SharedSecret = signedSecret, VerificationToken = signedVerify });
 
                 Stream.InitializeEncryption(sharedKey);
+
+                SendPacket(new AuthorizationPasswordPacket { PasswordHash = Password.Hash });
             }
             else
                 throw new SCONException("Encryption was not enabled!");
@@ -64,12 +67,12 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                BasicUIVM.PlayersGridDataList = new ObservableCollection<PlayersDataGridModel>();
+                BasicUIVM.PlayersGridDataList.Clear();
 
                 for (var i = 0; i < packet.PlayerInfoList.Length; i++)
                 {
                     var player = packet.PlayerInfoList[i];
-                    var model = new PlayersDataGridModel
+                    BasicUIVM.PlayersGridDataList.Add(new PlayersDataGridModel
                     {
                         Number = i,
                         Name = player.Name,
@@ -77,8 +80,7 @@ namespace PokeD.SCON
                         IP = player.IP,
                         Ping = player.Ping,
                         Online = true
-                    };
-                    BasicUIVM.PlayersGridDataList.Add(model);
+                    });
                 }
 
             }
@@ -100,17 +102,16 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                BasicUIVM.LogsGridDataList = new ObservableCollection<LogsDataGridModel>();
+                BasicUIVM.LogsGridDataList.Clear();
 
                 for (var i = 0; i < packet.LogList.Length; i++)
                 {
                     var log = packet.LogList[i];
-                    var model = new LogsDataGridModel
+                    BasicUIVM.LogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
                         LogFilename = log.LogFileName
-                    };
-                    BasicUIVM.LogsGridDataList.Add(model);
+                    });
                 }
             }
             else
@@ -121,7 +122,7 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                BasicUIVM.DisplayLog(packet.LogFile);
+                BasicUIVM.DisplayLog(packet.LogFilename, packet.LogFile);
             }
             else
                 DisplayMessage("You are not authorized.");
@@ -131,17 +132,16 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                BasicUIVM.CrashLogsGridDataList = new ObservableCollection<LogsDataGridModel>();
+                BasicUIVM.CrashLogsGridDataList.Clear();
 
                 for (var i = 0; i < packet.CrashLogList.Length; i++)
                 {
                     var log = packet.CrashLogList[i];
-                    var model = new LogsDataGridModel
+                    BasicUIVM.CrashLogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
                         LogFilename = log.LogFileName
-                    };
-                    BasicUIVM.CrashLogsGridDataList.Add(model);
+                    });
                 }
             }
             else
@@ -152,7 +152,7 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                BasicUIVM.DisplayLog(packet.CrashLogFile);
+                BasicUIVM.DisplayLog(packet.CrashLogFilename, packet.CrashLogFile);
             }
             else
                 DisplayMessage("You are not authorized.");
@@ -162,7 +162,45 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
-                
+                BasicUIVM.PlayersDatabaseGridDataList.Clear();
+
+                for (var i = 0; i < packet.PlayerDatabaseList.Length; i++)
+                {
+                    var databaseEntry = packet.PlayerDatabaseList[i];
+                    BasicUIVM.PlayersDatabaseGridDataList.Add(new PlayersDatabaseDataGridModel
+                    {
+                        Number = i,
+                        Name = databaseEntry.Name,
+                        GameJoltID = databaseEntry.GameJoltID,
+                        LastIP = databaseEntry.LastIP,
+                        LastSeen = databaseEntry.LastSeen
+                    });
+                }
+            }
+            else
+                DisplayMessage("You are not authorized.");
+        }
+
+        private void HandleBanListResponse(BanListResponsePacket packet)
+        {
+            if (Authorized)
+            {
+                BasicUIVM.BansGridDataList.Clear();
+
+                for (var i = 0; i < packet.BanList.Length; i++)
+                {
+                    var ban = packet.BanList[i];
+                    BasicUIVM.BansGridDataList.Add(new BansDataGridModel
+                    {
+                        Number = i,
+                        Name = ban.Name,
+                        GameJoltID = ban.GameJoltID,
+                        IP = ban.IP,
+                        BanTime = ban.BanTime,
+                        UnBanTime = ban.UnBanTime,
+                        Reason = ban.Reason
+                    });
+                }
             }
             else
                 DisplayMessage("You are not authorized.");

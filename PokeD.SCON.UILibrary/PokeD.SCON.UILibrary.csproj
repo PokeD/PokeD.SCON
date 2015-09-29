@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BansDataGridModel.cs" />
     <Compile Include="BasicUIViewModel.cs" />
     <Compile Include="GeneratedUI\BasicUI.xaml.cs" />
     <Compile Include="LogsDataGridModel.cs" />

@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="EmptyKeysUI.cs" />
     <Compile Include="Logger.cs" />
-    <Compile Include="IClient.cs" />
     <Compile Include="IO\BouncyCastleAES.cs" />
     <Compile Include="IO\ProtobufStream.cs" />
     <Compile Include="SCONClient.Packets.cs" />

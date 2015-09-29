@@ -295,8 +295,6 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Search_ComboBox.Margin = new Thickness(245F, 0F, 0F, 105F);
             this.Search_ComboBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.Search_ComboBox.VerticalAlignment = VerticalAlignment.Bottom;
-            this.Search_ComboBox.HorizontalContentAlignment = HorizontalAlignment.Stretch;
-            this.Search_ComboBox.VerticalContentAlignment = VerticalAlignment.Stretch;
             this.Search_ComboBox.ItemsSource = Get_Search_ComboBox_Items();
             this.Search_ComboBox.SelectedIndex = 0;
             this.Search_ComboBox.MaxDropDownHeight = 105F;
@@ -368,6 +366,8 @@ namespace EmptyKeys.UserInterface.Generated {
             Binding PlayersDataGrid_Col4_b = new Binding("Name");
             PlayersDataGrid_Col4.Binding = PlayersDataGrid_Col4_b;
             PlayersDataGrid.Columns.Add(PlayersDataGrid_Col4);
+            Binding binding_PlayersDataGrid_DataContext = new Binding("PlayersGridData");
+            PlayersDataGrid.SetBinding(DataGrid.DataContextProperty, binding_PlayersDataGrid_DataContext);
             Binding binding_PlayersDataGrid_ItemsSource = new Binding("PlayersGridDataList");
             PlayersDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding_PlayersDataGrid_ItemsSource);
             items.Add(e_1);
@@ -486,6 +486,10 @@ namespace EmptyKeys.UserInterface.Generated {
             GetLog_Button.VerticalAlignment = VerticalAlignment.Bottom;
             GetLog_Button.Content = "Get Log";
             GetLog_Button.CommandParameter = "GetLog";
+            Binding binding_GetLog_Button_IsEnabled = new Binding("IsLogsButtonVisible");
+            GetLog_Button.SetBinding(Button.IsEnabledProperty, binding_GetLog_Button_IsEnabled);
+            Binding binding_GetLog_Button_IsHitTestVisible = new Binding("IsLogsButtonVisible");
+            GetLog_Button.SetBinding(Button.IsHitTestVisibleProperty, binding_GetLog_Button_IsHitTestVisible);
             Binding binding_GetLog_Button_Command = new Binding("ButtonCommand");
             GetLog_Button.SetBinding(Button.CommandProperty, binding_GetLog_Button_Command);
             items.Add(e_7);
@@ -527,6 +531,10 @@ namespace EmptyKeys.UserInterface.Generated {
             GetCrashLog_Button.VerticalAlignment = VerticalAlignment.Bottom;
             GetCrashLog_Button.Content = "Get Crash Log";
             GetCrashLog_Button.CommandParameter = "GetCrashLog";
+            Binding binding_GetCrashLog_Button_IsEnabled = new Binding("IsCrashLogsButtonVisible");
+            GetCrashLog_Button.SetBinding(Button.IsEnabledProperty, binding_GetCrashLog_Button_IsEnabled);
+            Binding binding_GetCrashLog_Button_IsHitTestVisible = new Binding("IsCrashLogsButtonVisible");
+            GetCrashLog_Button.SetBinding(Button.IsHitTestVisibleProperty, binding_GetCrashLog_Button_IsHitTestVisible);
             Binding binding_GetCrashLog_Button_Command = new Binding("ButtonCommand");
             GetCrashLog_Button.SetBinding(Button.CommandProperty, binding_GetCrashLog_Button_Command);
             items.Add(e_9);

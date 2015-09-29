@@ -3,62 +3,61 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ek="clr-namespace:EmptyKeys.UserInterface.Designer;assembly=EmptyKeys.UserInterface.Designer"
-             xmlns:themes="clr-namespace:EmptyKeys.UserInterface.Themes;assembly=EmptyKeys.UserInterface"
              mc:Ignorable="d" 
              d:DesignHeight="640" d:DesignWidth="800">
     <Grid>
 
-        <Image Name="logo" Margin="10,10,0,0" Width="160" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Image Name="logo" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160">
             <Image.Source>
                 <BitmapImage UriSource="Images/PokeD Logo.png"/>
             </Image.Source>
         </Image>
 
-        <TextBox x:Name="ServerIP_TextBox" HorizontalAlignment="Left" Height="25" Margin="10,175,0,0" VerticalAlignment="Top" Width="160" Text="{Binding ServerIP}">
+        <TextBox x:Name="ServerIP_TextBox" Margin="10,175,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160" Text="{Binding ServerIP}">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBox.GotFocus" ek:EventTrigger.CommandPath="WatermarkGotFocus" ek:EventTrigger.CommandParameter="ServerIP"/>
                 <EventTrigger RoutedEvent="TextBox.LostFocus" ek:EventTrigger.CommandPath="WatermarkLostFocus" ek:EventTrigger.CommandParameter="ServerIP"/>
             </TextBox.Triggers>
         </TextBox>
-        <TextBox x:Name="ServerPort_TextBox" HorizontalAlignment="Left" Height="25" Margin="10,205,0,0" VerticalAlignment="Top" Width="160" Text="{Binding ServerPort}">
+        <TextBox x:Name="ServerPort_TextBox" Margin="10,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160" Text="{Binding ServerPort}">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBox.GotFocus" ek:EventTrigger.CommandPath="WatermarkGotFocus" ek:EventTrigger.CommandParameter="ServerPort"/>
                 <EventTrigger RoutedEvent="TextBox.LostFocus" ek:EventTrigger.CommandPath="WatermarkLostFocus" ek:EventTrigger.CommandParameter="ServerPort"/>
             </TextBox.Triggers>
         </TextBox>
-        <TextBox x:Name="SCON_Password_TextBox" HorizontalAlignment="Left" Height="25" Margin="10,235,0,0" VerticalAlignment="Top" Width="160" Text="{Binding SCON_Password}">
+        <TextBox x:Name="SCON_Password_TextBox" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160" Text="{Binding SCON_Password}">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBox.GotFocus" ek:EventTrigger.CommandPath="WatermarkGotFocus" ek:EventTrigger.CommandParameter="SCON_Password"/>
                 <EventTrigger RoutedEvent="TextBox.LostFocus" ek:EventTrigger.CommandPath="WatermarkLostFocus" ek:EventTrigger.CommandParameter="SCON_Password"/>
             </TextBox.Triggers>
         </TextBox>
 
-        <TextBox x:Name="ServerIP_Watermark_TextBox" HorizontalAlignment="Left" Margin="10,175,0,0" Text="Server IP" VerticalAlignment="Top" Height="25" Width="160"
-                    Visibility="{Binding ServerIP_Watermark}" IsHitTestVisible="False" IsEnabled="False"/>
-        <TextBox x:Name="ServerPort_Watermark_TextBox" HorizontalAlignment="Left" Margin="10,205,0,0" Text="Server Port" VerticalAlignment="Top" Height="25" Width="160"
-                    Visibility="{Binding ServerPort_Watermark}" IsHitTestVisible="False" IsEnabled="False"/>
-        <TextBox x:Name="SCON_Password_Watermark_TextBox" HorizontalAlignment="Left" Margin="10,235,0,0" Text="SCON Password" VerticalAlignment="Top" Height="25" Width="160"
-                    Visibility="{Binding SCON_Password_Watermark}" IsHitTestVisible="False" IsEnabled="False"/>
+        <TextBox x:Name="ServerIP_Watermark_TextBox" Text="Server IP" Margin="10,175,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Visibility="{Binding ServerIP_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
+        <TextBox x:Name="ServerPort_Watermark_TextBox" Text="Server Port" Margin="10,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Visibility="{Binding ServerPort_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
+        <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                    Visibility="{Binding SCON_Password_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
 
-        <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" HorizontalAlignment="Left" Margin="15,265,0,0" VerticalAlignment="Top"
+        <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Command="{Binding CheckBoxCommand}" CommandParameter="AutoReconnect" Width="160" Height="25"/>
 
-        <Button x:Name="Connect_Button" Content="Connect" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top" Width="160"
+        <Button x:Name="Connect_Button" Content="Connect" Margin="10,295,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"
                 Command="{Binding ButtonCommand}" CommandParameter="Connect" IsEnabled="{Binding IsConnectButtonVisible.Value}" IsHitTestVisible="{Binding IsConnectButtonVisible.Value}"/>
-        <Button x:Name="Disconnect_Button" Content="Disconnect" HorizontalAlignment="Left" Margin="10,322,0,0" VerticalAlignment="Top" Width="160"
+        <Button x:Name="Disconnect_Button" Content="Disconnect" Margin="10,322,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"
                 Command="{Binding ButtonCommand}" CommandParameter="Disconnect" IsEnabled="{Binding IsConnectButtonVisible.Invert}" IsHitTestVisible="{Binding IsConnectButtonVisible.Invert}"/>
-        <Button x:Name="Refresh_Button" Content="Refresh (F5)" HorizontalAlignment="Left" Margin="10,349,0,0" VerticalAlignment="Top" Width="160"
+        <Button x:Name="Refresh_Button" Content="Refresh (F5)" Margin="10,349,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"
                 Command="{Binding ButtonCommand}" CommandParameter="Refresh" IsEnabled="{Binding IsConnectButtonVisible.Invert}" IsHitTestVisible="{Binding IsConnectButtonVisible.Invert}"/>
 
-        <TextBlock x:Name="LastRefresh_TextBlock" HorizontalAlignment="Left" Margin="10,376,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="160"
-                   Text="{Binding LastRefresh}" Height="25" />
+        <TextBlock x:Name="LastRefresh_TextBlock" TextWrapping="Wrap" Margin="10,376,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160"
+                   Text="{Binding LastRefresh}"/>
 
 
-        <TabControl Margin="175,10,10,135" Name="TabControl" Foreground="#FF210909" SelectedItem="{Binding TabSelectedItem}">
+        <TabControl Name="TabControl" Foreground="#FF210909" SelectedItem="{Binding TabSelectedItem}" Margin="175,10,10,135">
 
             <TabItem Header="Players">
                 <Grid>
-                    <DataGrid x:Name="PlayersDataGrid" ItemsSource="{Binding PlayersGridDataList}" AutoGenerateColumns="False">
+                    <DataGrid x:Name="PlayersDataGrid" DataContext="{Binding PlayersGridData}" ItemsSource="{Binding PlayersGridDataList}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
                             <DataGridTextColumn Header="IP" Binding="{Binding IP}"/>
@@ -106,7 +105,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="GetLog_Button" Content="Get Log" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="110"
-                            Command="{Binding ButtonCommand}" CommandParameter="GetLog"/>
+                            Command="{Binding ButtonCommand}" CommandParameter="GetLog" IsEnabled="{Binding IsLogsButtonVisible}" IsHitTestVisible="{Binding IsLogsButtonVisible}"/>
                 </Grid>
             </TabItem>
 
@@ -119,7 +118,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="GetCrashLog_Button" Content="Get Crash Log" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="110"
-                            Command="{Binding ButtonCommand}" CommandParameter="GetCrashLog"/>
+                            Command="{Binding ButtonCommand}" CommandParameter="GetCrashLog" IsEnabled="{Binding IsCrashLogsButtonVisible}" IsHitTestVisible="{Binding IsCrashLogsButtonVisible}"/>
                 </Grid>
             </TabItem>
 
@@ -130,17 +129,17 @@
 
         </TabControl>
 
-        <TextBlock x:Name="Search_TextBlock" HorizontalAlignment="Left" Margin="175,0,0,105" TextWrapping="Wrap" Text="Search:" VerticalAlignment="Bottom" Height="25" Width="65"/>
+        <TextBlock x:Name="Search_TextBlock" TextWrapping="Wrap" Text="Search:" Margin="175,0,0,105" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="25" Width="65"/>
 
-        <ComboBox x:Name="Search_ComboBox" HorizontalAlignment="Left" Margin="245,0,0,105" VerticalAlignment="Bottom" VerticalContentAlignment="Stretch" Width="115" Height="25" MaxDropDownHeight="105" HorizontalContentAlignment="Stretch">
+        <ComboBox x:Name="Search_ComboBox" Margin="245,0,0,105" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="25" Width="115" MaxDropDownHeight="105">
             <ComboBoxItem Name="Entry1" Content="Name" IsSelected="True"/>
             <ComboBoxItem Name="Entry2" Content="Game Jold ID" IsSelected="False"/>
             <ComboBoxItem Name="Entry3" Content="IP" IsSelected="False"/>
         </ComboBox>
 
-        <TextBox x:Name="Search_TextBox" Margin="365,0,100,105" TextWrapping="Wrap" VerticalAlignment="Bottom" Height="25" RenderTransformOrigin="0,1.72"/>
+        <TextBox x:Name="Search_TextBox" TextWrapping="Wrap" Margin="365,0,100,105" VerticalAlignment="Bottom" Height="25"/>
 
-        <CheckBox x:Name="AutoRefresh_CheckBox" Content="Auto Refresh" HorizontalAlignment="Right" Margin="0,0,10,105" VerticalAlignment="Bottom" Height="25"/>
+        <CheckBox x:Name="AutoRefresh_CheckBox" Content="Auto Refresh" Margin="0,0,10,105" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="25"/>
 
         <TextBlock x:Name="ConsoleOutput_TextBlock" Margin="175,0,10,10" VerticalAlignment="Bottom" Height="90">
             <Run Text="Test 123"/><LineBreak/><Run Text="Test 132"/><LineBreak/><Run Text="Test 231"/><LineBreak/><Run Text="Test 213"/><LineBreak/><Run Text="Test 321"/></TextBlock>
