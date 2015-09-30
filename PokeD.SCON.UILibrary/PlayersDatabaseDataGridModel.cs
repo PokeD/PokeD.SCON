@@ -9,5 +9,6 @@ namespace PokeD.SCON.UILibrary
         public ulong GameJoltID { get; set; }
         public string LastIP { get; set; }
         public DateTime LastSeen { get; set; }
+        public bool Online { get; set; }
     }
 }

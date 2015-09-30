@@ -60,10 +60,12 @@
                     <DataGrid x:Name="PlayersDataGrid" DataContext="{Binding PlayersGridData}" ItemsSource="{Binding PlayersGridDataList}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="GameJolt ID" Binding="{Binding GameJoltID}"/>
+                            <DataGridTextColumn Header="Location" Binding="{Binding LevelFile}"/>
+                            <DataGridTextColumn Header="Play Time" Binding="{Binding PlayTime}"/>
                             <DataGridTextColumn Header="IP" Binding="{Binding IP}"/>
                             <DataGridTextColumn Header="Ping" Binding="{Binding Ping}"/>
-                            <DataGridTextColumn Header="GameJolt ID" Binding="{Binding GameJoltID}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </Grid>
@@ -74,7 +76,9 @@
                     <DataGrid x:Name="BansDataGrid" ItemsSource="{Binding BansGridDataList}" AutoGenerateColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
-                            <DataGridTextColumn Header="Game Jolt ID / IP" Binding="{Binding GameJoltID}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Game Jolt ID" Binding="{Binding GameJoltID}"/>
+                            <DataGridTextColumn Header="IP" Binding="{Binding IP}"/>
                             <DataGridTextColumn Header="Minutes Left" Binding="{Binding MinutesLeft}"/>
                             <DataGridTextColumn Header="Reason" Binding="{Binding Reason}"/>
                         </DataGrid.Columns>

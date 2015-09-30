@@ -1,4 +1,6 @@
-﻿namespace PokeD.SCON.UILibrary
+﻿using System;
+
+namespace PokeD.SCON.UILibrary
 {
     public class PlayersDataGridModel
     {
@@ -7,7 +9,7 @@
         public ulong GameJoltID { get; set; }
         public string IP { get; set; }
         public uint Ping { get; set; }
-        public bool Online { get; set; }
-
+        public string LevelFile { get; set; }
+        public TimeSpan PlayTime { get; set; }
     }
 }

@@ -79,7 +79,8 @@ namespace PokeD.SCON
                         GameJoltID = player.GameJoltID,
                         IP = player.IP,
                         Ping = player.Ping,
-                        Online = true
+                        LevelFile = player.LevelFile,
+                        PlayTime = player.PlayTime
                     });
                 }
 
