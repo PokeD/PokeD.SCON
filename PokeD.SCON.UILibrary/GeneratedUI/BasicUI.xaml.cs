@@ -303,13 +303,14 @@ namespace EmptyKeys.UserInterface.Generated {
             this.e_0.Children.Add(this.Search_TextBox);
             this.Search_TextBox.Name = "Search_TextBox";
             this.Search_TextBox.Height = 25F;
-            this.Search_TextBox.Margin = new Thickness(365F, 0F, 100F, 105F);
+            this.Search_TextBox.Margin = new Thickness(365F, 0F, 135F, 105F);
             this.Search_TextBox.VerticalAlignment = VerticalAlignment.Bottom;
             // AutoRefresh_CheckBox element
             this.AutoRefresh_CheckBox = new CheckBox();
             this.e_0.Children.Add(this.AutoRefresh_CheckBox);
             this.AutoRefresh_CheckBox.Name = "AutoRefresh_CheckBox";
             this.AutoRefresh_CheckBox.Height = 25F;
+            this.AutoRefresh_CheckBox.Width = 120F;
             this.AutoRefresh_CheckBox.Margin = new Thickness(0F, 0F, 10F, 105F);
             this.AutoRefresh_CheckBox.HorizontalAlignment = HorizontalAlignment.Right;
             this.AutoRefresh_CheckBox.VerticalAlignment = VerticalAlignment.Bottom;

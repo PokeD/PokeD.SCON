@@ -215,18 +215,15 @@ namespace PokeD.SCON.UILibrary
                 case "Refresh":
                     LastRefresh = $"{DateTime.Now:HH:mm:ss}";
 
-                    if (OnRefresh != null)
-                        OnRefresh();
+                    OnRefresh?.Invoke();
                     break;
 
                 case "GetLog":
-                    if (OnGetLog != null)
-                        OnGetLog(TabItemSelectedIndex);
+                    OnGetLog?.Invoke(TabItemSelectedIndex);
                     break;
 
                 case "GetCrashLog":
-                    if (OnGetCrashLog != null)
-                        OnGetCrashLog(TabItemSelectedIndex);
+                    OnGetCrashLog?.Invoke(TabItemSelectedIndex);
                     break;
             }
         }
@@ -251,22 +248,20 @@ namespace PokeD.SCON.UILibrary
 
         public void DisplayLog(string logname, string log)
         {
-            //MessageBox.Show(log, new RelayCommand(o => {}), false);
-            MessageBox.Show(log, "Save log?", MessageBoxButton.YesNo, new RelayCommand(o =>
+            MessageBox.Show(log, "Save log?", MessageBoxButton.YesNo, new RelayCommand(button =>
             {
-                if (o.ToString() == "Yes")
-                    if(OnSaveLog != null)
-                        OnSaveLog(logname, log);
-            }), true);
+                if(button == null)
+                    return;
+
+                if (button.ToString() == "Yes")
+                    OnSaveLog?.Invoke(logname, log);
+                
+            }), false);
         }
 
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message, new RelayCommand(o => { }), false);
-            //MessageBox.Show(message, "", MessageBoxButton.YesNo, new RelayCommand(o =>
-            //{
-            //    ;
-            //}), true);
         }
 
     }

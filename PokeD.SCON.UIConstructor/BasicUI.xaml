@@ -137,9 +137,9 @@
             <ComboBoxItem Name="Entry3" Content="IP" IsSelected="False"/>
         </ComboBox>
 
-        <TextBox x:Name="Search_TextBox" TextWrapping="Wrap" Margin="365,0,100,105" VerticalAlignment="Bottom" Height="25"/>
+        <TextBox x:Name="Search_TextBox" TextWrapping="Wrap" Margin="365,0,135,105" VerticalAlignment="Bottom" Height="25"/>
 
-        <CheckBox x:Name="AutoRefresh_CheckBox" Content="Auto Refresh" Margin="0,0,10,105" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="25"/>
+        <CheckBox x:Name="AutoRefresh_CheckBox" Content="Auto Refresh" Margin="0,0,10,105" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="25" Width="120"/>
 
         <TextBlock x:Name="ConsoleOutput_TextBlock" Margin="175,0,10,10" VerticalAlignment="Bottom" Height="90">
             <Run Text="Test 123"/><LineBreak/><Run Text="Test 132"/><LineBreak/><Run Text="Test 231"/><LineBreak/><Run Text="Test 213"/><LineBreak/><Run Text="Test 321"/></TextBlock>
