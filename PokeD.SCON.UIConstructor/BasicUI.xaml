@@ -7,7 +7,7 @@
              d:DesignHeight="640" d:DesignWidth="800">
     <Grid>
 
-        <Image Name="logo" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160">
+        <Image Name="Logo_Image" Margin="10,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="160">
             <Image.Source>
                 <BitmapImage UriSource="Images/PokeD Logo.png"/>
             </Image.Source>
@@ -25,21 +25,34 @@
                 <EventTrigger RoutedEvent="TextBox.LostFocus" ek:EventTrigger.CommandPath="WatermarkLostFocus" ek:EventTrigger.CommandParameter="ServerPort"/>
             </TextBox.Triggers>
         </TextBox>
+
         <TextBox x:Name="SCON_Password_TextBox" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160" Text="{Binding SCON_Password}">
             <TextBox.Triggers>
                 <EventTrigger RoutedEvent="TextBox.GotFocus" ek:EventTrigger.CommandPath="WatermarkGotFocus" ek:EventTrigger.CommandParameter="SCON_Password"/>
                 <EventTrigger RoutedEvent="TextBox.LostFocus" ek:EventTrigger.CommandPath="WatermarkLostFocus" ek:EventTrigger.CommandParameter="SCON_Password"/>
             </TextBox.Triggers>
+            <!--
+            <TextBox.Background>
+                <ImageBrush ImageSource="Images/lock.png" AlignmentX="Left" Stretch="None"></ImageBrush>
+            </TextBox.Background>
+            -->
         </TextBox>
+
+        <Image Name="Lock_Image" Margin="10,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Height="16">
+            <Image.Source>
+                <BitmapImage UriSource="Images/lock.png"/>
+            </Image.Source>
+        </Image>
+
 
         <TextBox x:Name="ServerIP_Watermark_TextBox" Text="Server IP" Margin="10,175,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding ServerIP_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
         <TextBox x:Name="ServerPort_Watermark_TextBox" Text="Server Port" Margin="10,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding ServerPort_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
-        <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,418,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding SCON_Password_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
 
-        <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+            <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Command="{Binding CheckBoxCommand}" CommandParameter="AutoReconnect" Width="160" Height="25"/>
 
         <Button x:Name="Connect_Button" Content="Connect" Margin="10,295,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"
@@ -50,7 +63,7 @@
                 Command="{Binding ButtonCommand}" CommandParameter="Refresh" IsEnabled="{Binding IsConnectButtonVisible.Invert}" IsHitTestVisible="{Binding IsConnectButtonVisible.Invert}"/>
 
         <TextBlock x:Name="LastRefresh_TextBlock" TextWrapping="Wrap" Margin="10,376,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Width="160"
-                   Text="{Binding LastRefresh}"/>
+                   Text="{Binding LastRefresh, StringFormat='Last Refresh: {0}'}"/>
 
 
         <TabControl Name="TabControl" Foreground="#FF210909" SelectedItem="{Binding TabSelectedItem}" Margin="175,10,10,135">
@@ -77,7 +90,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Game Jolt ID" Binding="{Binding GameJoltID}"/>
+                            <DataGridTextColumn Header="GameJolt ID" Binding="{Binding GameJoltID}"/>
                             <DataGridTextColumn Header="IP" Binding="{Binding IP}"/>
                             <DataGridTextColumn Header="Minutes Left" Binding="{Binding MinutesLeft}"/>
                             <DataGridTextColumn Header="Reason" Binding="{Binding Reason}"/>
@@ -92,7 +105,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Game Jolt ID" Binding="{Binding GameJoltID}"/>
+                            <DataGridTextColumn Header="GameJolt ID" Binding="{Binding GameJoltID}"/>
                             <DataGridTextColumn Header="Last IP" Binding="{Binding LastIP}"/>
                             <DataGridTextColumn Header="Last Seen" Binding="{Binding LastSeen}"/>
                         </DataGrid.Columns>

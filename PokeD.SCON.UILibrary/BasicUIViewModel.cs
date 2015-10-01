@@ -34,6 +34,8 @@ namespace PokeD.SCON.UILibrary
 
     public class BasicUIViewModel : ViewModelBase
     {
+        public ICommand NumericPreviewTextInput { get; set; }
+
         #region Watermark
 
         public ICommand WatermarkGotFocus { get; set; }
@@ -76,15 +78,15 @@ namespace PokeD.SCON.UILibrary
             switch (obj.ToString())
             {
                 case "ServerIP":
-                    ServerIP_Watermark = string.IsNullOrEmpty(ServerIP) ? Visibility.Visible : Visibility.Hidden;
+                    ServerIP_Watermark = string.IsNullOrEmpty(serverIP) ? Visibility.Visible : Visibility.Hidden;
                     break;
 
                 case "ServerPort":
-                    ServerPort_Watermark = string.IsNullOrEmpty(ServerPort) ? Visibility.Visible : Visibility.Hidden;
+                    ServerPort_Watermark = string.IsNullOrEmpty(serverPort) ? Visibility.Visible : Visibility.Hidden;
                     break;
 
                 case "SCON_Password":
-                    SCON_Password_Watermark = string.IsNullOrEmpty(SCON_Password) ? Visibility.Visible : Visibility.Hidden;
+                    SCON_Password_Watermark = string.IsNullOrEmpty(scon_Password) ? Visibility.Visible : Visibility.Hidden;
                     break;
             }
         }
@@ -97,14 +99,25 @@ namespace PokeD.SCON.UILibrary
         public event Func<bool> OnRefresh;
 
 
-        private string serverIP;
+        private string serverIP = string.Empty;
         public string ServerIP { get { return serverIP; } set { SetProperty(ref serverIP, value); } }
 
-        private string serverPort;
+        private string serverPort = string.Empty;
         public string ServerPort { get { return serverPort; } set { SetProperty(ref serverPort, value); } }
 
-        private string scon_Password;
-        public string SCON_Password { get { return scon_Password; } set { SetProperty(ref scon_Password, value); } }
+        private string scon_Password = string.Empty;
+
+        public string SCON_Password
+        {
+            get
+            {
+                return scon_Password;
+            }
+            set
+            {
+                SetProperty(ref scon_Password, value);
+            }
+        }
 
         private bool autoReconnect;
 
@@ -114,8 +127,8 @@ namespace PokeD.SCON.UILibrary
         private bool isConnectButtonVisible = true;
         public InvertableBool IsConnectButtonVisible { get { return isConnectButtonVisible; } set { SetProperty(ref isConnectButtonVisible, value); } }
 
-        private string lastRefresh;
-        public string LastRefresh { get { return $"Last Refresh: {lastRefresh}"; } set { SetProperty(ref lastRefresh, value); } }
+        private TimeSpan lastRefresh;
+        public TimeSpan LastRefresh { get { return lastRefresh; } set { SetProperty(ref lastRefresh, value); } }
 
 
         public event Action<string> TabChanged;
@@ -157,8 +170,7 @@ namespace PokeD.SCON.UILibrary
             {
                 SetProperty(ref tabSelectedIndex, value);
 
-                if (TabChanged != null)
-                    TabChanged((string) tabSelectedIndex.Header);
+                TabChanged?.Invoke((string) tabSelectedIndex.Header);
             }
         }
 
@@ -178,6 +190,8 @@ namespace PokeD.SCON.UILibrary
             CheckBoxCommand = new RelayCommand(OnCheckBox);
             ButtonCommand = new RelayCommand(OnButtonClick);
 
+            NumericPreviewTextInput = new RelayCommand(BasicUIViewModel_NumericPreviewTextInput);
+
             WatermarkGotFocus = new RelayCommand(BasicUIViewModel_WatermarkGotFocus);
             WatermarkLostFocus = new RelayCommand(BasicUIViewModel_WatermarkLostFocus);
 
@@ -189,6 +203,11 @@ namespace PokeD.SCON.UILibrary
 
             LogsGridDataList.CollectionChanged += (s, a) => IsLogsButtonVisible = LogsGridDataList.Count != 0;
             CrashLogsGridDataList.CollectionChanged += (s, a) => IsCrashLogsButtonVisible = LogsGridDataList.Count != 0;
+        }
+
+        private void BasicUIViewModel_NumericPreviewTextInput(object o)
+        {
+
         }
 
         private void OnButtonClick(object obj)
@@ -213,7 +232,7 @@ namespace PokeD.SCON.UILibrary
                     break;
 
                 case "Refresh":
-                    LastRefresh = $"{DateTime.Now:HH:mm:ss}";
+                    LastRefresh = DateTime.Now.TimeOfDay;
 
                     OnRefresh?.Invoke();
                     break;

@@ -25,13 +25,15 @@ namespace EmptyKeys.UserInterface.Generated {
         
         private Grid e_0;
         
-        private Image logo;
+        private Image Logo_Image;
         
         private TextBox ServerIP_TextBox;
         
         private TextBox ServerPort_TextBox;
         
         private TextBox SCON_Password_TextBox;
+        
+        private Image Lock_Image;
         
         private TextBox ServerIP_Watermark_TextBox;
         
@@ -83,17 +85,17 @@ namespace EmptyKeys.UserInterface.Generated {
             this.e_0 = new Grid();
             this.Content = this.e_0;
             this.e_0.Name = "e_0";
-            // logo element
-            this.logo = new Image();
-            this.e_0.Children.Add(this.logo);
-            this.logo.Name = "logo";
-            this.logo.Width = 160F;
-            this.logo.Margin = new Thickness(10F, 10F, 0F, 0F);
-            this.logo.HorizontalAlignment = HorizontalAlignment.Left;
-            this.logo.VerticalAlignment = VerticalAlignment.Top;
-            BitmapImage logo_bm = new BitmapImage();
-            logo_bm.TextureAsset = "Images/PokeD Logo";
-            this.logo.Source = logo_bm;
+            // Logo_Image element
+            this.Logo_Image = new Image();
+            this.e_0.Children.Add(this.Logo_Image);
+            this.Logo_Image.Name = "Logo_Image";
+            this.Logo_Image.Width = 160F;
+            this.Logo_Image.Margin = new Thickness(10F, 10F, 0F, 0F);
+            this.Logo_Image.HorizontalAlignment = HorizontalAlignment.Left;
+            this.Logo_Image.VerticalAlignment = VerticalAlignment.Top;
+            BitmapImage Logo_Image_bm = new BitmapImage();
+            Logo_Image_bm.TextureAsset = "Images/PokeD Logo";
+            this.Logo_Image.Source = Logo_Image_bm;
             // ServerIP_TextBox element
             this.ServerIP_TextBox = new TextBox();
             this.e_0.Children.Add(this.ServerIP_TextBox);
@@ -151,6 +153,18 @@ namespace EmptyKeys.UserInterface.Generated {
             EventTrigger.SetCommandParameter(SCON_Password_TextBox_ET_1, "SCON_Password");
             Binding binding_SCON_Password_TextBox_Text = new Binding("SCON_Password");
             this.SCON_Password_TextBox.SetBinding(TextBox.TextProperty, binding_SCON_Password_TextBox_Text);
+            // Lock_Image element
+            this.Lock_Image = new Image();
+            this.e_0.Children.Add(this.Lock_Image);
+            this.Lock_Image.Name = "Lock_Image";
+            this.Lock_Image.Height = 16F;
+            this.Lock_Image.Width = 16F;
+            this.Lock_Image.Margin = new Thickness(10F, 240F, 0F, 0F);
+            this.Lock_Image.HorizontalAlignment = HorizontalAlignment.Left;
+            this.Lock_Image.VerticalAlignment = VerticalAlignment.Top;
+            BitmapImage Lock_Image_bm = new BitmapImage();
+            Lock_Image_bm.TextureAsset = "Images/lock";
+            this.Lock_Image.Source = Lock_Image_bm;
             // ServerIP_Watermark_TextBox element
             this.ServerIP_Watermark_TextBox = new TextBox();
             this.e_0.Children.Add(this.ServerIP_Watermark_TextBox);
@@ -187,7 +201,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.SCON_Password_Watermark_TextBox.Width = 160F;
             this.SCON_Password_Watermark_TextBox.IsEnabled = false;
             this.SCON_Password_Watermark_TextBox.IsHitTestVisible = false;
-            this.SCON_Password_Watermark_TextBox.Margin = new Thickness(10F, 235F, 0F, 0F);
+            this.SCON_Password_Watermark_TextBox.Margin = new Thickness(10F, 418F, 0F, 0F);
             this.SCON_Password_Watermark_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.SCON_Password_Watermark_TextBox.VerticalAlignment = VerticalAlignment.Top;
             this.SCON_Password_Watermark_TextBox.Text = "SCON Password";
@@ -265,6 +279,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.LastRefresh_TextBlock.VerticalAlignment = VerticalAlignment.Top;
             this.LastRefresh_TextBlock.TextWrapping = TextWrapping.Wrap;
             Binding binding_LastRefresh_TextBlock_Text = new Binding("LastRefresh");
+            binding_LastRefresh_TextBlock_Text.StringFormat = "Last Refresh: {0}";
             this.LastRefresh_TextBlock.SetBinding(TextBlock.TextProperty, binding_LastRefresh_TextBlock_Text);
             // TabControl element
             this.TabControl = new TabControl();
@@ -324,6 +339,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.ConsoleOutput_TextBlock.VerticalAlignment = VerticalAlignment.Bottom;
             this.ConsoleOutput_TextBlock.Text = "Test 123\r\nTest 132\r\nTest 231\r\nTest 213\r\nTest 321\r\n";
             ImageManager.Instance.AddImage("Images/PokeD Logo");
+            ImageManager.Instance.AddImage("Images/lock");
             FontManager.Instance.AddFont("Segoe UI", 12F, FontStyle.Regular, "Segoe_UI_9_Regular");
         }
         
@@ -406,7 +422,7 @@ namespace EmptyKeys.UserInterface.Generated {
             BansDataGrid_Col1.Binding = BansDataGrid_Col1_b;
             BansDataGrid.Columns.Add(BansDataGrid_Col1);
             DataGridTextColumn BansDataGrid_Col2 = new DataGridTextColumn();
-            BansDataGrid_Col2.Header = "Game Jolt ID";
+            BansDataGrid_Col2.Header = "GameJolt ID";
             Binding BansDataGrid_Col2_b = new Binding("GameJoltID");
             BansDataGrid_Col2.Binding = BansDataGrid_Col2_b;
             BansDataGrid.Columns.Add(BansDataGrid_Col2);
@@ -452,7 +468,7 @@ namespace EmptyKeys.UserInterface.Generated {
             PlayersDatabaseDataGrid_Col1.Binding = PlayersDatabaseDataGrid_Col1_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col1);
             DataGridTextColumn PlayersDatabaseDataGrid_Col2 = new DataGridTextColumn();
-            PlayersDatabaseDataGrid_Col2.Header = "Game Jolt ID";
+            PlayersDatabaseDataGrid_Col2.Header = "GameJolt ID";
             Binding PlayersDatabaseDataGrid_Col2_b = new Binding("GameJoltID");
             PlayersDatabaseDataGrid_Col2.Binding = PlayersDatabaseDataGrid_Col2_b;
             PlayersDatabaseDataGrid.Columns.Add(PlayersDatabaseDataGrid_Col2);
