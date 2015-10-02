@@ -171,7 +171,7 @@ namespace PokeD.SCON
                 var id = reader.ReadVarInt();
                 var origin = reader.ReadVarInt();
 
-                if (id >= SCONResponse.Packets.Length)
+                if (id >= SCONPacketResponses.Packets.Length)
                 {
                     Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
                     SendPacket(new AuthorizationDisconnectPacket { Reason = $"Packet ID {id} is not correct!" });
@@ -179,7 +179,7 @@ namespace PokeD.SCON
                     return;
                 }
 
-                var packet = SCONResponse.Packets[id]().ReadPacket(reader);
+                var packet = SCONPacketResponses.Packets[id]().ReadPacket(reader);
                 packet.Origin = origin;
 
                 HandlePacket(packet);
