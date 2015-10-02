@@ -29,7 +29,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- String
-
         public string ReadString(int length = 0)
         {
             length = ReadVarInt();
@@ -39,7 +38,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- VarInt
-
         public VarInt ReadVarInt()
         {
             uint result = 0;
@@ -51,14 +49,17 @@ namespace PokeD.SCON.IO
                 result |= (current & 0x7Fu) << length++ * 7;
 
                 if (length > 5)
-                    throw new SCONException("Reading error: VarInt may not be longer than 28 bits.");
+                {
+                    //throw new ProtobufReadingException("Reading error: VarInt may not be longer than 28 bits.");
+                    Logger.Log(LogType.GlobalError, $"Protobuf Reading Error: VarInt may not be longer than 28 bits.");
+                    return (int) result;
+                }
 
                 if ((current & 0x80) != 128)
                     break;
             }
-            return (int)result;
+            return (int) result;
         }
-
         public VarInt ReadVarInt(out int length)
         {
             uint result = 0;
@@ -70,36 +71,32 @@ namespace PokeD.SCON.IO
                 result |= (current & 0x7Fu) << length++ * 7;
 
                 if (length > 5)
-                    throw new SCONException("Reading error: VarInt may not be longer than 60 bits.");
+                    throw new ProtobufReadingException("Reading error: VarInt may not be longer than 60 bits.");
 
                 if ((current & 0x80) != 128)
                     break;
             }
-            return (int)result;
+            return (int) result;
         }
 
 
         // -- Boolean
-
         public bool ReadBoolean()
         {
             return Convert.ToBoolean(ReadByte());
         }
 
         // -- SByte & Byte
-
         public sbyte ReadSByte()
         {
-            return unchecked((sbyte)ReadByte());
+            return unchecked((sbyte) ReadByte());
         }
-
         public byte ReadByte()
         {
-            return (byte)_stream.ReadByte();
+            return (byte) _stream.ReadByte();
         }
 
         // -- Short & UShort
-
         public short ReadShort()
         {
             var bytes = ReadByteArray(2);
@@ -107,14 +104,12 @@ namespace PokeD.SCON.IO
 
             return BitConverter.ToInt16(bytes, 0);
         }
-
         public ushort ReadUShort()
         {
-            return (ushort)((ReadByte() << 8) | ReadByte());
+            return (ushort) ((ReadByte() << 8) | ReadByte());
         }
 
         // -- Int & UInt
-
         public int ReadInt()
         {
             var bytes = ReadByteArray(4);
@@ -122,10 +117,9 @@ namespace PokeD.SCON.IO
 
             return BitConverter.ToInt32(bytes, 0);
         }
-
         public uint ReadUInt()
         {
-            return (uint)(
+            return (uint) (
                 (ReadByte() << 24) |
                 (ReadByte() << 16) |
                 (ReadByte() << 8) |
@@ -133,7 +127,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Long & ULong
-
         public long ReadLong()
         {
             var bytes = ReadByteArray(8);
@@ -141,7 +134,6 @@ namespace PokeD.SCON.IO
 
             return BitConverter.ToInt64(bytes, 0);
         }
-
         public ulong ReadULong()
         {
             return unchecked(
@@ -156,7 +148,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- BigInt & UBigInt
-
         public BigInteger ReadBigInteger()
         {
             var bytes = ReadByteArray(16);
@@ -164,14 +155,12 @@ namespace PokeD.SCON.IO
 
             return new BigInteger(bytes);
         }
-
         public BigInteger ReadUBigInteger()
         {
             throw new NotImplementedException();
         }
 
         // -- Floats
-
         public float ReadFloat()
         {
             var bytes = ReadByteArray(4);
@@ -181,7 +170,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Doubles
-
         public double ReadDouble()
         {
             var bytes = ReadByteArray(8);
@@ -190,9 +178,7 @@ namespace PokeD.SCON.IO
             return BitConverter.ToDouble(bytes, 0);
         }
 
-
         // -- StringArray
-
         public string[] ReadStringArray(int value)
         {
             var myStrings = new string[value];
@@ -204,7 +190,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- VarIntArray
-
         public int[] ReadVarIntArray(int value)
         {
             var myInts = new int[value];
@@ -216,7 +201,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- IntArray
-
         public int[] ReadIntArray(int value)
         {
             var myInts = new int[value];
@@ -228,7 +212,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- ByteArray
-
         public byte[] ReadByteArray(int value)
         {
             var myBytes = new byte[value];
@@ -255,9 +238,10 @@ namespace PokeD.SCON.IO
             return myBytes;
         }
 
+
         public int BytesLeft()
         {
-            return (int)(_stream.Length - _stream.Position);
+            return (int) (_stream.Length - _stream.Position);
         }
 
 

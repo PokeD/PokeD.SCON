@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmptyKeysUI.cs" />
+    <Compile Include="Exceptions\ProtobufReadingException.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="IO\BouncyCastleAES.cs" />
     <Compile Include="IO\ProtobufStream.cs" />

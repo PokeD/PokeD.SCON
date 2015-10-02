@@ -60,10 +60,9 @@ namespace PokeD.SCON.IO
         #region Vars
 
         // -- String
-
         public void WriteString(string value, int length = 0)
         {
-            var lengthBytes = GetVarIntBytes(value.Length);
+            var lengthBytes = new VarInt(_buffer.Length).InByteArray();//GetVarIntBytes(value.Length);
             var final = new byte[value.Length + lengthBytes.Length];
 
             Buffer.BlockCopy(lengthBytes, 0, final, 0, lengthBytes.Length);
@@ -73,46 +72,22 @@ namespace PokeD.SCON.IO
         }
 
         // -- VarInt
-
         public void WriteVarInt(VarInt value)
         {
-            WriteByteArray(GetVarIntBytes(value));
-        }
-
-        // BUG: Is broken?
-        public static byte[] GetVarIntBytes(int _value)
-        {
-            uint value = (uint)_value;
-
-            var bytes = new List<byte>();
-            while (true)
-            {
-                if ((value & 0xFFFFFF80u) == 0)
-                {
-                    bytes.Add((byte)value);
-                    break;
-                }
-                bytes.Add((byte)(value & 0x7F | 0x80));
-                value >>= 7;
-            }
-
-            return bytes.ToArray();
+            WriteByteArray(value.InByteArray());
         }
 
         // -- Boolean
-
         public void WriteBoolean(bool value)
         {
             WriteByte(Convert.ToByte(value));
         }
 
         // -- SByte & Byte
-
         public void WriteSByte(sbyte value)
         {
-            WriteByte(unchecked((byte)value));
+            WriteByte(unchecked((byte) value));
         }
-
         public void WriteByte(byte value)
         {
             if (_buffer != null)
@@ -129,7 +104,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Short & UShort
-
         public void WriteShort(short value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -137,7 +111,6 @@ namespace PokeD.SCON.IO
 
             WriteByteArray(bytes);
         }
-
         public void WriteUShort(ushort value)
         {
             WriteByteArray(new byte[]
@@ -148,7 +121,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Int & UInt
-
         public void WriteInt(int value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -156,7 +128,6 @@ namespace PokeD.SCON.IO
 
             WriteByteArray(bytes);
         }
-
         public void WriteUInt(uint value)
         {
             WriteByteArray(new[]
@@ -169,7 +140,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Long & ULong
-
         public void WriteLong(long value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -177,7 +147,6 @@ namespace PokeD.SCON.IO
 
             WriteByteArray(bytes);
         }
-
         public void WriteULong(ulong value)
         {
             WriteByteArray(new[]
@@ -194,7 +163,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- BigInt & UBigInt
-
         public void WriteBigInteger(BigInteger value)
         {
             var bytes = value.ToByteArray();
@@ -202,14 +170,12 @@ namespace PokeD.SCON.IO
 
             WriteByteArray(bytes);
         }
-
         public void WriteUBigInteger(BigInteger value)
         {
             throw new NotImplementedException();
         }
 
         // -- Float
-
         public void WriteFloat(float value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -219,7 +185,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- Double
-
         public void WriteDouble(double value)
         {
             var bytes = BitConverter.GetBytes(value);
@@ -228,9 +193,7 @@ namespace PokeD.SCON.IO
             WriteByteArray(bytes);
         }
 
-
         // -- StringArray
-
         public void WriteStringArray(params string[] value)
         {
             var length = value.Length;
@@ -240,7 +203,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- VarIntArray
-
         public void WriteVarIntArray(params int[] value)
         {
             var length = value.Length;
@@ -250,7 +212,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- IntArray
-
         public void WriteIntArray(params int[] value)
         {
             var length = value.Length;
@@ -260,7 +221,6 @@ namespace PokeD.SCON.IO
         }
 
         // -- ByteArray
-
         public void WriteByteArray(params byte[] value)
         {
             if (_buffer != null)
@@ -302,12 +262,16 @@ namespace PokeD.SCON.IO
                 result |= (current & 0x7Fu) << length++ * 7;
 
                 if (length > 5)
-                    throw new SCONException("Remote Client Stream reading error: VarInt may not be longer than 28 bits.");
+                {
+                    //throw new ProtobufReadingException("Remote Client Stream reading error: VarInt may not be longer than 28 bits.");
+                    Logger.Log(LogType.GlobalError, $"Protobuf Reading Error: VarInt may not be longer than 28 bits.");
+                    return (int) result;
+                }
 
                 if ((current & 0x80) != 128)
                     break;
             }
-            return (int)result;
+            return (int) result;
         }
 
         public byte[] ReadByteArray(int value)
@@ -339,18 +303,12 @@ namespace PokeD.SCON.IO
             else
                 _tcp.Send(buffer, offset, count);
         }
-
         private int Receive(byte[] buffer, int offset, int count)
         {
             if (EncryptionEnabled)
                 return _aesStream.Read(buffer, offset, count);
             else
                 return _tcp.Receive(buffer, offset, count);
-        }
-
-        public void SendPacket(ref P3DPacket p3DPacket)
-        {
-            throw new NotImplementedException();
         }
 
         public void SendPacket(ref ProtobufPacket packet)
@@ -360,13 +318,15 @@ namespace PokeD.SCON.IO
             packet.WritePacket(this);
             Purge();
         }
+        public void SendPacket(ref P3DPacket packet)
+        {
+            throw new NotImplementedException();
+        }
 
-
-        #region Purge
 
         private void Purge()
         {
-            var lenBytes = GetVarIntBytes(_buffer.Length);
+            var lenBytes = new VarInt(_buffer.Length).InByteArray();//GetVarIntBytes(_buffer.Length);
 
             var tempBuff = new byte[_buffer.Length + lenBytes.Length];
 
@@ -378,7 +338,6 @@ namespace PokeD.SCON.IO
             _buffer = null;
         }
 
-        #endregion
 
         public void Dispose()
         {
