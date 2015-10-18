@@ -30,8 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EmptyKeys.UserInterface.Designer">
-      <HintPath>..\..\packages\EmptyKeysUI_MonoGame.1.9.0.0\tools\EmptyKeys.UserInterface.Designer.dll</HintPath>
+    <Reference Include="EmptyKeys.UserInterface.Designer, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EmptyKeysUI_Generator.1.10.0.0\lib\net45\EmptyKeys.UserInterface.Designer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -60,10 +61,14 @@
       <Link>Images\PokeD Logo.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)packages\EmptyKeysUI_MonoGame.1.9.0.0\tools\ekUIGen.exe" -i="$(ProjectDir)\" -o="$(ProjectDir)..\PokeD.SCON.UILibrary\GeneratedUI" -oa="$(SolutionDir)Content" -rm=MonoGame</PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)packages\EmptyKeysUI_Generator.1.10.0.0\tools\ekUIGen.exe" -i="$(ProjectDir)\" -o="$(ProjectDir)..\PokeD.SCON.UILibrary\GeneratedUI" -oa="$(SolutionDir)Content" -rm=MonoGame</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

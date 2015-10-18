@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using PokeD.Core.Data;
-using PokeD.Core.Interfaces;
+using Aragas.Core.Data;
+using Aragas.Core.Interfaces;
+using Aragas.Core.IO;
+using Aragas.Core.Packets;
+using Aragas.Core.Wrappers;
 using PokeD.Core.Packets;
 
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
-using PokeD.Core.Wrappers;
 
-using PokeD.SCON.IO;
 using PokeD.SCON.UILibrary;
 
 namespace PokeD.SCON
@@ -131,67 +132,72 @@ namespace PokeD.SCON
 
         public void Update()
         {
-            if (!Stream.Connected)
+            if (Stream.Connected)
             {
-                Dispose();
-                return;
-            }
-
-            if (Stream.Connected && Stream.DataAvailable > 0)
-            {
-                //try
-                //{
+                if (Stream.Connected && Stream.DataAvailable > 0)
+                {
                     var dataLength = Stream.ReadVarInt();
-                    if (dataLength == 0)
+                    if (dataLength > 0)
+                    {
+                        var data = Stream.ReadByteArray(dataLength);
+
+                        HandleData(data);
+                    }
+                    else
                     {
                         Logger.Log(LogType.GlobalError, $"Protobuf Reading Error: Packet Length size is 0. Disconnecting.");
-                        SendPacket(new AuthorizationDisconnectPacket { Reason = "Packet Length size is 0!" });
+                        SendPacket(new AuthorizationDisconnectPacket {Reason = "Packet Length size is 0!"});
                         Dispose();
-                        return;
                     }
-
-                    var data = Stream.ReadByteArray(dataLength);
-
-                    HandleData(data);
-                //}
-                //catch (ProtobufReadingException ex) { Logger.Log(LogType.GlobalError, $"Protobuf Reading Exeption: {ex.Message}. Disconnecting IClient {Name}."); }
+                }
             }
+            else
+                Dispose();
         }
 
         private void HandleData(byte[] data)
         {
-            if (data == null)
+            if (data != null)
             {
-                Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet Data is null.");
-                return;
-            }
-
-            using (var reader = new ProtobufDataReader(data))
-            {
-                var id = reader.ReadVarInt();
-                var origin = reader.ReadVarInt();
-
-                if (id >= SCONPacketResponses.Packets.Length)
+                using (var reader = new ProtobufDataReader(data))
                 {
-                    Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
-                    SendPacket(new AuthorizationDisconnectPacket { Reason = $"Packet ID {id} is not correct!" });
-                    Dispose();
-                    return;
-                }
+                    var id = reader.Read<VarInt>();
+                    var origin = reader.Read<VarInt>();
 
-                var packet = SCONPacketResponses.Packets[id]().ReadPacket(reader);
-                packet.Origin = origin;
+                    if (SCONPacketResponses.Packets.Length > id)
+                    {
+                        if (SCONPacketResponses.Packets[id] != null)
+                        {
+                            var packet = SCONPacketResponses.Packets[id]().ReadPacket(reader);
+                            packet.Origin = origin;
 
-                HandlePacket(packet);
+                            HandlePacket(packet);
 
 #if DEBUG
-                Received.Add(packet);
+                            Received.Add(packet);
 #endif
+                        }
+                        else
+                        {
+                            Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
+                            SendPacket(new AuthorizationDisconnectPacket {Reason = $"Packet ID {id} is not correct!"});
+                            Dispose();
+                        }
+                    }
+                    else
+                    {
+                        Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
+                        SendPacket(new AuthorizationDisconnectPacket {Reason = $"Packet ID {id} is not correct!"});
+                        Dispose();
+                    }
+                }
             }
+            else
+                Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet Data is null.");
         }
         private void HandlePacket(ProtobufPacket packet)
         {
-            switch ((SCONPacketTypes) packet.ID)
+            switch ((SCONPacketTypes)(int) packet.ID)
             {
                 case SCONPacketTypes.AuthorizationResponse:
                     HandleAuthorizationResponse((AuthorizationResponsePacket) packet);
