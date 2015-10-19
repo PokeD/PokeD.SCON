@@ -22,7 +22,7 @@ namespace PokeD.SCON
         BasicUIViewModel BasicUIVM { get; }
 
 
-        INetworkTCPClient Client { get; }
+        ITCPClient Client { get; }
         IPacketStream Stream { get; }
 
 
@@ -49,7 +49,7 @@ namespace PokeD.SCON
 
             BasicUIVM.OnSaveLog += BasicUIViewModel_SaveLog;
 
-            Client = NetworkTCPClientWrapper.NewInstance();
+            Client = TCPClientWrapper.CreateTCPClient();
             Stream = new ProtobufStream(Client);
         }
         private bool BasicUIViewModel_OnConnect(string ip, ushort port, string password, bool autoReconnect)
