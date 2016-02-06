@@ -15,10 +15,9 @@ namespace PokeD.SCON
 {
     public class EmptyKeysUI : Game
     {
-        GraphicsDeviceManager Graphics { get; }
+        public static Point DefaultResolution => new Point(800, 640);
 
-        int MinScreenWidth { get; } = 800;
-        int MaxScreenHeight { get; } = 640;
+        GraphicsDeviceManager Graphics { get; }
 
         BasicUI BasicUI { get; set; }
         BasicUIViewModel ViewModel { get; set; }
@@ -26,15 +25,17 @@ namespace PokeD.SCON
 
         SCONClient SCONClient { get; set; }
 
-        public EmptyKeysUI(ref Action<Rectangle> onClientSizeChanged)
+        public EmptyKeysUI(Action<Game> platformCode, bool fullscreen = false)
         {
-            Content.RootDirectory = "Content";
-
             Graphics = new GraphicsDeviceManager(this);
             Graphics.PreparingDeviceSettings += Graphics_PreparingDeviceSettings;
             Graphics.DeviceCreated += Graphics_DeviceCreated;
+            Graphics.IsFullScreen = fullscreen;
+            Graphics.ApplyChanges();
 
-            onClientSizeChanged += Window_ClientSizeChanged;
+            Content.RootDirectory = "Content";
+
+            platformCode?.Invoke(this);
         }
         private void Graphics_DeviceCreated(object sender, EventArgs e)
         {
@@ -42,24 +43,35 @@ namespace PokeD.SCON
         }
         private void Graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
         {
-            Graphics.PreferredBackBufferWidth = MinScreenWidth;
-            Graphics.PreferredBackBufferHeight = MaxScreenHeight;
+            Graphics.PreferredBackBufferWidth = DefaultResolution.X;
+            Graphics.PreferredBackBufferHeight = DefaultResolution.Y;
 
-            Graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            //Graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Graphics.SynchronizeWithVerticalRetrace = true;
-            Graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
+            //Graphics.PreferredDepthStencilFormat = DepthFormat.Depth24Stencil8;
         }
-        private void Window_ClientSizeChanged(Rectangle clientBounds)
+
+        public void OnResize(object sender, EventArgs e)
         {
-            var width = clientBounds.Width;
-            var height = clientBounds.Height;
+            if (Graphics.GraphicsDevice.Viewport.Width < DefaultResolution.X || Graphics.GraphicsDevice.Viewport.Height < DefaultResolution.Y)
+            {
+                Resize(DefaultResolution);
+                return;
+            }
 
-            Graphics.PreferredBackBufferWidth = width < MinScreenWidth ? MinScreenWidth : width;
-            Graphics.PreferredBackBufferHeight = height < MaxScreenHeight ? MaxScreenHeight : height;
-            Graphics.ApplyChanges();
-
-            BasicUI.Resize(Graphics.PreferredBackBufferWidth, Graphics.PreferredBackBufferHeight);
+            BasicUI?.Resize(Graphics.GraphicsDevice.Viewport.Width, Graphics.GraphicsDevice.Viewport.Height);
         }
+        public void Resize(Point size)
+        {
+            if (size.X < DefaultResolution.X || size.Y < DefaultResolution.Y)
+                return;
+
+            Graphics.PreferredBackBufferWidth = size.X;
+            Graphics.PreferredBackBufferHeight = size.Y;
+
+            Graphics.ApplyChanges();
+        }
+
 
         protected override void Initialize()
         {

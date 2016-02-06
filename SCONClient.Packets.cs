@@ -69,14 +69,13 @@ namespace PokeD.SCON
             {
                 BasicUIVM.PlayersGridDataList.Clear();
 
-                for (var i = 0; i < packet.PlayerInfoList.Length; i++)
+                for (var i = 0; i < packet.PlayerInfos.Length; i++)
                 {
-                    var player = packet.PlayerInfoList[i];
+                    var player = packet.PlayerInfos[i];
                     BasicUIVM.PlayersGridDataList.Add(new PlayersDataGridModel
                     {
                         Number = i,
                         Name = player.Name,
-                        GameJoltID = player.GameJoltID,
                         IP = player.IP,
                         Ping = player.Ping,
                         LevelFile = player.LevelFile,
@@ -105,9 +104,9 @@ namespace PokeD.SCON
             {
                 BasicUIVM.LogsGridDataList.Clear();
 
-                for (var i = 0; i < packet.LogList.Length; i++)
+                for (var i = 0; i < packet.Logs.Length; i++)
                 {
-                    var log = packet.LogList[i];
+                    var log = packet.Logs[i];
                     BasicUIVM.LogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
@@ -135,9 +134,9 @@ namespace PokeD.SCON
             {
                 BasicUIVM.CrashLogsGridDataList.Clear();
 
-                for (var i = 0; i < packet.CrashLogList.Length; i++)
+                for (var i = 0; i < packet.CrashLogs.Length; i++)
                 {
-                    var log = packet.CrashLogList[i];
+                    var log = packet.CrashLogs[i];
                     BasicUIVM.CrashLogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
@@ -165,14 +164,13 @@ namespace PokeD.SCON
             {
                 BasicUIVM.PlayersDatabaseGridDataList.Clear();
 
-                for (var i = 0; i < packet.PlayerDatabaseList.Length; i++)
+                for (var i = 0; i < packet.PlayerDatabases.Length; i++)
                 {
-                    var databaseEntry = packet.PlayerDatabaseList[i];
+                    var databaseEntry = packet.PlayerDatabases[i];
                     BasicUIVM.PlayersDatabaseGridDataList.Add(new PlayersDatabaseDataGridModel
                     {
                         Number = i,
                         Name = databaseEntry.Name,
-                        GameJoltID = databaseEntry.GameJoltID,
                         LastIP = databaseEntry.LastIP,
                         LastSeen = databaseEntry.LastSeen
                     });
@@ -188,14 +186,13 @@ namespace PokeD.SCON
             {
                 BasicUIVM.BansGridDataList.Clear();
 
-                for (var i = 0; i < packet.BanList.Length; i++)
+                for (var i = 0; i < packet.Bans.Length; i++)
                 {
-                    var ban = packet.BanList[i];
+                    var ban = packet.Bans[i];
                     BasicUIVM.BansGridDataList.Add(new BansDataGridModel
                     {
                         Number = i,
                         Name = ban.Name,
-                        GameJoltID = ban.GameJoltID,
                         IP = ban.IP,
                         BanTime = ban.BanTime,
                         UnBanTime = ban.UnBanTime,

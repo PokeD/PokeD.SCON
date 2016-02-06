@@ -6,8 +6,8 @@ using Aragas.Core.Interfaces;
 using Aragas.Core.IO;
 using Aragas.Core.Packets;
 using Aragas.Core.Wrappers;
-using PokeD.Core.Packets;
 
+using PokeD.Core.Packets;
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
@@ -23,7 +23,7 @@ namespace PokeD.SCON
 
 
         ITCPClient Client { get; }
-        IPacketStream Stream { get; }
+        PacketStream Stream { get; }
 
 
         PasswordStorage Password { get; set; }
@@ -162,14 +162,12 @@ namespace PokeD.SCON
                 using (var reader = new ProtobufDataReader(data))
                 {
                     var id = reader.Read<VarInt>();
-                    var origin = reader.Read<VarInt>();
 
                     if (SCONPacketResponses.Packets.Length > id)
                     {
                         if (SCONPacketResponses.Packets[id] != null)
                         {
                             var packet = SCONPacketResponses.Packets[id]().ReadPacket(reader);
-                            packet.Origin = origin;
 
                             HandlePacket(packet);
 
