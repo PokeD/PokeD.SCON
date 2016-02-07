@@ -156,10 +156,11 @@
 
         <TextBox x:Name="Search_TextBox" TextWrapping="Wrap" Margin="365,0,135,105" VerticalAlignment="Bottom" Height="25"/>
 
-        <CheckBox x:Name="AutoRefresh_CheckBox" Content="Auto Refresh" Margin="0,0,10,105" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="25" Width="120"/>
+        <CheckBox x:Name="EnableChat_CheckBox" Content="Enable Chat" Margin="0,0,10,105" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                  Command="{Binding CheckBoxCommand}" CommandParameter="EnableChat" Height="25" Width="120"/>
 
-        <TextBlock x:Name="ConsoleOutput_TextBlock" Margin="175,0,10,10" VerticalAlignment="Bottom" Height="90">
-            <Run Text="Test 123"/><LineBreak/><Run Text="Test 132"/><LineBreak/><Run Text="Test 231"/><LineBreak/><Run Text="Test 213"/><LineBreak/><Run Text="Test 321"/></TextBlock>
+        <TextBlock x:Name="ConsoleOutput_TextBlock" Margin="175,0,10,10" VerticalAlignment="Bottom" Height="90"
+                   Text="{Binding ConsoleOutput}"/>
 
     </Grid>
 </ek:UIRoot>

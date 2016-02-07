@@ -59,7 +59,7 @@ namespace EmptyKeys.UserInterface.Generated {
         
         private TextBox Search_TextBox;
         
-        private CheckBox AutoRefresh_CheckBox;
+        private CheckBox EnableChat_CheckBox;
         
         private TextBlock ConsoleOutput_TextBlock;
         
@@ -320,16 +320,19 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Search_TextBox.Height = 25F;
             this.Search_TextBox.Margin = new Thickness(365F, 0F, 135F, 105F);
             this.Search_TextBox.VerticalAlignment = VerticalAlignment.Bottom;
-            // AutoRefresh_CheckBox element
-            this.AutoRefresh_CheckBox = new CheckBox();
-            this.e_0.Children.Add(this.AutoRefresh_CheckBox);
-            this.AutoRefresh_CheckBox.Name = "AutoRefresh_CheckBox";
-            this.AutoRefresh_CheckBox.Height = 25F;
-            this.AutoRefresh_CheckBox.Width = 120F;
-            this.AutoRefresh_CheckBox.Margin = new Thickness(0F, 0F, 10F, 105F);
-            this.AutoRefresh_CheckBox.HorizontalAlignment = HorizontalAlignment.Right;
-            this.AutoRefresh_CheckBox.VerticalAlignment = VerticalAlignment.Bottom;
-            this.AutoRefresh_CheckBox.Content = "Auto Refresh";
+            // EnableChat_CheckBox element
+            this.EnableChat_CheckBox = new CheckBox();
+            this.e_0.Children.Add(this.EnableChat_CheckBox);
+            this.EnableChat_CheckBox.Name = "EnableChat_CheckBox";
+            this.EnableChat_CheckBox.Height = 25F;
+            this.EnableChat_CheckBox.Width = 120F;
+            this.EnableChat_CheckBox.Margin = new Thickness(0F, 0F, 10F, 105F);
+            this.EnableChat_CheckBox.HorizontalAlignment = HorizontalAlignment.Right;
+            this.EnableChat_CheckBox.VerticalAlignment = VerticalAlignment.Bottom;
+            this.EnableChat_CheckBox.Content = "Enable Chat";
+            this.EnableChat_CheckBox.CommandParameter = "EnableChat";
+            Binding binding_EnableChat_CheckBox_Command = new Binding("CheckBoxCommand");
+            this.EnableChat_CheckBox.SetBinding(CheckBox.CommandProperty, binding_EnableChat_CheckBox_Command);
             // ConsoleOutput_TextBlock element
             this.ConsoleOutput_TextBlock = new TextBlock();
             this.e_0.Children.Add(this.ConsoleOutput_TextBlock);
@@ -337,7 +340,8 @@ namespace EmptyKeys.UserInterface.Generated {
             this.ConsoleOutput_TextBlock.Height = 90F;
             this.ConsoleOutput_TextBlock.Margin = new Thickness(175F, 0F, 10F, 10F);
             this.ConsoleOutput_TextBlock.VerticalAlignment = VerticalAlignment.Bottom;
-            this.ConsoleOutput_TextBlock.Text = "Test 123\r\nTest 132\r\nTest 231\r\nTest 213\r\nTest 321\r\n";
+            Binding binding_ConsoleOutput_TextBlock_Text = new Binding("ConsoleOutput");
+            this.ConsoleOutput_TextBlock.SetBinding(TextBlock.TextProperty, binding_ConsoleOutput_TextBlock_Text);
             ImageManager.Instance.AddImage("Images/PokeD Logo");
             ImageManager.Instance.AddImage("Images/lock");
             FontManager.Instance.AddFont("Segoe UI", 12F, FontStyle.Regular, "Segoe_UI_9_Regular");

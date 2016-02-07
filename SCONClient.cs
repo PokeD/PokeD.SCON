@@ -49,6 +49,8 @@ namespace PokeD.SCON
 
             BasicUIVM.OnSaveLog += BasicUIViewModel_SaveLog;
 
+            BasicUIVM.OnChatStateChanged += BasicUIViewModel_OnChatStateChanged;
+
             Client = TCPClientWrapper.CreateTCPClient();
             Stream = new ProtobufStream(Client);
         }
@@ -127,6 +129,14 @@ namespace PokeD.SCON
         private void BasicUIViewModel_SaveLog(string logname, string log)
         {
             FileSystemWrapper.SaveLog(logname, log);
+        }
+
+        private void BasicUIViewModel_OnChatStateChanged(bool value)
+        {
+            if (value)
+                SendPacket(new StartChatReceivingPacket());
+            else
+                SendPacket(new StopChatReceivingPacket());
         }
 
 

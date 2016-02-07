@@ -1,4 +1,7 @@
-﻿using Org.BouncyCastle.Crypto;
+﻿using System;
+using System.Linq;
+using System.Text;
+using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
 using PokeD.Core;
@@ -92,7 +95,20 @@ namespace PokeD.SCON
         {
             if (Authorized)
             {
+                var builder = new StringBuilder();
+                foreach (var line in BasicUIVM.ConsoleOutput.Split(new [] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries))
+                    builder.AppendLine(line);
 
+                builder.AppendLine($"{packet.Player}: {packet.Message}");
+
+
+                var reversed = builder.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).Reverse();
+                builder.Clear();
+                foreach (var line in reversed)
+                    builder.AppendLine(line);
+
+
+                BasicUIVM.ConsoleOutput = builder.ToString();
             }
             else
                 DisplayMessage("You are not authorized.");

@@ -15,21 +15,11 @@ namespace PokeD.SCON.UILibrary
         public bool Value => _value;
         public bool Invert => !_value;
 
-        public InvertableBool(bool b)
-        {
-            _value = b;
-        }
+        public InvertableBool(bool b) { _value = b; }
 
-        public static implicit operator InvertableBool(bool b)
-        {
-            return new InvertableBool(b);
-        }
+        public static implicit operator InvertableBool(bool b) => new InvertableBool(b);
 
-        public static implicit operator bool (InvertableBool b)
-        {
-            return b._value;
-        }
-
+        public static implicit operator bool (InvertableBool b) => b._value;
     }
 
     public class BasicUIViewModel : ViewModelBase
@@ -97,6 +87,7 @@ namespace PokeD.SCON.UILibrary
         public event Func<string, ushort, string, bool, bool> OnConnect;
         public event Func<bool> OnDisconnect;
         public event Func<bool> OnRefresh;
+        public event Action<bool> OnChatStateChanged;
 
 
         private string serverIP = string.Empty;
@@ -106,20 +97,22 @@ namespace PokeD.SCON.UILibrary
         public string ServerPort { get { return serverPort; } set { SetProperty(ref serverPort, value); } }
 
         private string scon_Password = string.Empty;
-
         public string SCON_Password
         {
-            get
-            {
-                return scon_Password;
-            }
-            set
-            {
-                SetProperty(ref scon_Password, value);
-            }
+            get { return scon_Password; }
+            set { SetProperty(ref scon_Password, value); }
         }
 
         private bool autoReconnect;
+        private bool enableChat;
+
+        private string consoleOutput = string.Empty;
+        public string ConsoleOutput
+        {
+            get { return consoleOutput; }
+            set { SetProperty(ref consoleOutput, value); }
+        }
+
 
         public ICommand CheckBoxCommand { get; set; }
         public ICommand ButtonCommand { get; set; }
@@ -162,10 +155,7 @@ namespace PokeD.SCON.UILibrary
         private TabItem tabSelectedIndex;
         public TabItem TabSelectedItem
         {
-            get
-            {
-                return tabSelectedIndex;
-            }
+            get { return tabSelectedIndex; }
             set
             {
                 SetProperty(ref tabSelectedIndex, value);
@@ -256,6 +246,10 @@ namespace PokeD.SCON.UILibrary
             {
                 case "AutoReconnect":
                     autoReconnect = !autoReconnect;
+                    break;
+                case "EnableChat":
+                    enableChat = !enableChat;
+                    OnChatStateChanged?.Invoke(enableChat);
                     break;
             }
         }
