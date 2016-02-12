@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
 using PokeD.Core;
+using PokeD.Core.Data.SCON;
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
@@ -71,20 +74,7 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.PlayersGridDataList.Clear();
-
-                for (var i = 0; i < packet.PlayerInfos.Length; i++)
-                {
-                    var player = packet.PlayerInfos[i];
-                    BasicUIVM.PlayersGridDataList.Add(new PlayersDataGridModel
-                    {
-                        Number = i,
-                        Name = player.Name,
-                        IP = player.IP,
-                        Ping = player.Ping,
-                        LevelFile = player.LevelFile,
-                        PlayTime = player.PlayTime
-                    });
-                }
+                BasicUIVM.PlayersGridDataList = new ObservableCollection<PlayerInfo>(packet.PlayerInfos);
 
             }
             else
@@ -122,11 +112,10 @@ namespace PokeD.SCON
 
                 for (var i = 0; i < packet.Logs.Length; i++)
                 {
-                    var log = packet.Logs[i];
                     BasicUIVM.LogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
-                        LogFilename = log.LogFileName
+                        LogFilename = packet.Logs[i].LogFileName
                     });
                 }
             }
@@ -137,9 +126,7 @@ namespace PokeD.SCON
         private void HandleLogFileResponse(LogFileResponsePacket packet)
         {
             if (Authorized)
-            {
                 BasicUIVM.DisplayLog(packet.LogFilename, packet.LogFile);
-            }
             else
                 DisplayMessage("You are not authorized.");
         }
@@ -152,11 +139,10 @@ namespace PokeD.SCON
 
                 for (var i = 0; i < packet.CrashLogs.Length; i++)
                 {
-                    var log = packet.CrashLogs[i];
                     BasicUIVM.CrashLogsGridDataList.Add(new LogsDataGridModel
                     {
                         Number = i,
-                        LogFilename = log.LogFileName
+                        LogFilename = packet.CrashLogs[i].LogFileName
                     });
                 }
             }
@@ -179,18 +165,7 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.PlayersDatabaseGridDataList.Clear();
-
-                for (var i = 0; i < packet.PlayerDatabases.Length; i++)
-                {
-                    var databaseEntry = packet.PlayerDatabases[i];
-                    BasicUIVM.PlayersDatabaseGridDataList.Add(new PlayersDatabaseDataGridModel
-                    {
-                        Number = i,
-                        Name = databaseEntry.Name,
-                        LastIP = databaseEntry.LastIP,
-                        LastSeen = databaseEntry.LastSeen
-                    });
-                }
+                BasicUIVM.PlayersDatabaseGridDataList = new ObservableCollection<PlayerDatabase>(packet.PlayerDatabases);
             }
             else
                 DisplayMessage("You are not authorized.");
@@ -201,20 +176,7 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.BansGridDataList.Clear();
-
-                for (var i = 0; i < packet.Bans.Length; i++)
-                {
-                    var ban = packet.Bans[i];
-                    BasicUIVM.BansGridDataList.Add(new BansDataGridModel
-                    {
-                        Number = i,
-                        Name = ban.Name,
-                        IP = ban.IP,
-                        BanTime = ban.BanTime,
-                        UnBanTime = ban.UnBanTime,
-                        Reason = ban.Reason
-                    });
-                }
+                BasicUIVM.BansGridDataList = new ObservableCollection<Ban>(packet.Bans);
             }
             else
                 DisplayMessage("You are not authorized.");

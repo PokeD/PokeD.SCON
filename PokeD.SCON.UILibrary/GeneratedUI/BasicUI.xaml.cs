@@ -8,10 +8,13 @@ namespace EmptyKeys.UserInterface.Generated {
     using System.CodeDom.Compiler;
     using System.Collections.ObjectModel;
     using EmptyKeys.UserInterface;
+    using EmptyKeys.UserInterface.Charts;
     using EmptyKeys.UserInterface.Data;
     using EmptyKeys.UserInterface.Controls;
     using EmptyKeys.UserInterface.Controls.Primitives;
     using EmptyKeys.UserInterface.Input;
+    using EmptyKeys.UserInterface.Interactions.Core;
+    using EmptyKeys.UserInterface.Interactivity;
     using EmptyKeys.UserInterface.Media;
     using EmptyKeys.UserInterface.Media.Animation;
     using EmptyKeys.UserInterface.Media.Imaging;
@@ -20,7 +23,7 @@ namespace EmptyKeys.UserInterface.Generated {
     using EmptyKeys.UserInterface.Themes;
     
     
-    [GeneratedCodeAttribute("Empty Keys UI Generator", "1.10.0.0")]
+    [GeneratedCodeAttribute("Empty Keys UI Generator", "1.13.0.0")]
     public partial class BasicUI : UIRoot {
         
         private Grid e_0;
@@ -159,7 +162,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.Lock_Image.Name = "Lock_Image";
             this.Lock_Image.Height = 16F;
             this.Lock_Image.Width = 16F;
-            this.Lock_Image.Margin = new Thickness(10F, 240F, 0F, 0F);
+            this.Lock_Image.Margin = new Thickness(154F, 240F, 0F, 0F);
             this.Lock_Image.HorizontalAlignment = HorizontalAlignment.Left;
             this.Lock_Image.VerticalAlignment = VerticalAlignment.Top;
             BitmapImage Lock_Image_bm = new BitmapImage();
@@ -201,7 +204,7 @@ namespace EmptyKeys.UserInterface.Generated {
             this.SCON_Password_Watermark_TextBox.Width = 160F;
             this.SCON_Password_Watermark_TextBox.IsEnabled = false;
             this.SCON_Password_Watermark_TextBox.IsHitTestVisible = false;
-            this.SCON_Password_Watermark_TextBox.Margin = new Thickness(10F, 418F, 0F, 0F);
+            this.SCON_Password_Watermark_TextBox.Margin = new Thickness(10F, 235F, 0F, 0F);
             this.SCON_Password_Watermark_TextBox.HorizontalAlignment = HorizontalAlignment.Left;
             this.SCON_Password_Watermark_TextBox.VerticalAlignment = VerticalAlignment.Top;
             this.SCON_Password_Watermark_TextBox.Text = "SCON Password";
@@ -344,7 +347,6 @@ namespace EmptyKeys.UserInterface.Generated {
             this.ConsoleOutput_TextBlock.SetBinding(TextBlock.TextProperty, binding_ConsoleOutput_TextBlock_Text);
             ImageManager.Instance.AddImage("Images/PokeD Logo");
             ImageManager.Instance.AddImage("Images/lock");
-            FontManager.Instance.AddFont("Segoe UI", 12F, FontStyle.Regular, "Segoe_UI_9_Regular");
         }
         
         private static System.Collections.ObjectModel.ObservableCollection<object> Get_TabControl_Items() {

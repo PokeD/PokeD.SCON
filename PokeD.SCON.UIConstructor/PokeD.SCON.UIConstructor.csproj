@@ -30,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EmptyKeys.UserInterface.Designer, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EmptyKeysUI_Generator.1.10.0.0\lib\net45\EmptyKeys.UserInterface.Designer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -46,6 +42,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="EmptyKeys.UserInterface.Designer">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_Generator.1.13.0.0\lib\net45\EmptyKeys.UserInterface.Designer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Page Include="BasicUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -53,12 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Content\Images\lock.png">
-      <Link>Images\lock.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\Content\Images\PokeD Logo.png">
-      <Link>Images\PokeD Logo.png</Link>
+    <Content Include="BehaviorsLicense.txt" />
+    <Content Include="$(SolutionDir)\Content\Images\**">
+      <Link>Images\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="license.txt" />
@@ -68,13 +66,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)packages\EmptyKeysUI_Generator.1.10.0.0\tools\ekUIGen.exe" -i="$(ProjectDir)\" -o="$(ProjectDir)..\PokeD.SCON.UILibrary\GeneratedUI" -oa="$(SolutionDir)Content" -rm=MonoGame</PostBuildEvent>
+    <PostBuildEvent>CD "$(SolutionDir)packages\EmptyKeysUI_Generator*\tools"
+
+ekUIGen.exe -i="$(ProjectDir)\" -o="$(ProjectDir)..\PokeD.SCON.UILibrary\GeneratedUI" -oa="$(SolutionDir)\Content" -bd="$(TargetDir)\" -rm=MonoGame</PostBuildEvent>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

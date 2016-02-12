@@ -34,21 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Aragas.Core\Aragas.Core.csproj">
-      <Project>{468d9d51-dfe7-47a8-b0d6-52d035fc714d}</Project>
-      <Name>Aragas.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PokeD.Core\PokeD.Core.csproj">
-      <Project>{1cf84e56-3bbe-4a3a-9234-5951bf2558c3}</Project>
-      <Name>PokeD.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="PokeD.SCON.UILibrary\PokeD.SCON.UILibrary.csproj">
-      <Project>{B7EA1EA9-7BE6-4222-A232-3C3136EF0633}</Project>
-      <Name>PokeD.SCON.UILibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="EmptyKeysUI.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="SCONClient.Packets.cs" />
@@ -58,28 +43,37 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="crypto">
-      <HintPath>..\packages\Portable.BouncyCastle.1.7.0.2\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch10+MonoAndroid10+xamarinmac20+xamarinios10\crypto.dll</HintPath>
+      <HintPath>$(SolutionDir)\packages\Portable.BouncyCastle.1.7.0.2\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch10+MonoAndroid10+xamarinmac20+xamarinios10\crypto.dll</HintPath>
     </Reference>
     <Reference Include="EmptyKeys.UserInterface, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
     </Reference>
     <Reference Include="EmptyKeys.UserInterface.Core, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
     </Reference>
     <Reference Include="EmptyKeys.UserInterface.Debug, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
     </Reference>
     <Reference Include="EmptyKeys.UserInterface.MonoGame, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
     </Reference>
     <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MonoGame.Framework.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>$(SolutionDir)\packages\MonoGame.Framework.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)\Aragas.Core\Aragas.Core.csproj">
+      <Project>{468d9d51-dfe7-47a8-b0d6-52d035fc714d}</Project>
+      <Name>Aragas.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="$(SolutionDir)\PokeD.Core\PokeD.Core.csproj">
+      <Project>{1cf84e56-3bbe-4a3a-9234-5951bf2558c3}</Project>
+      <Name>PokeD.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="PokeD.SCON.UILibrary\PokeD.SCON.UILibrary.csproj">
+      <Project>{B7EA1EA9-7BE6-4222-A232-3C3136EF0633}</Project>
+      <Name>PokeD.SCON.UILibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -89,11 +83,4 @@
     <Content Include="license.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

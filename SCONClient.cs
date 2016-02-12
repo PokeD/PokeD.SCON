@@ -155,7 +155,7 @@ namespace PokeD.SCON
                     }
                     else
                     {
-                        Logger.Log(LogType.GlobalError, $"Protobuf Reading Error: Packet Length size is 0. Disconnecting.");
+                        Logger.Log(LogType.Error, $"Protobuf Reading Error: Packet Length size is 0. Disconnecting.");
                         SendPacket(new AuthorizationDisconnectPacket {Reason = "Packet Length size is 0!"});
                         Dispose();
                     }
@@ -187,21 +187,21 @@ namespace PokeD.SCON
                         }
                         else
                         {
-                            Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
+                            Logger.Log(LogType.Error, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
                             SendPacket(new AuthorizationDisconnectPacket {Reason = $"Packet ID {id} is not correct!"});
                             Dispose();
                         }
                     }
                     else
                     {
-                        Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
+                        Logger.Log(LogType.Error, $"SCON Reading Error: Packet ID {id} is not correct, Packet Data: {data}. Disconnecting.");
                         SendPacket(new AuthorizationDisconnectPacket {Reason = $"Packet ID {id} is not correct!"});
                         Dispose();
                     }
                 }
             }
             else
-                Logger.Log(LogType.GlobalError, $"SCON Reading Error: Packet Data is null.");
+                Logger.Log(LogType.Error, $"SCON Reading Error: Packet Data is null.");
         }
         private void HandlePacket(ProtobufPacket packet)
         {

@@ -15,29 +15,14 @@ namespace PokeD.SCON
         Info,
 
         /// <summary>
-        /// Error Log Type.
-        /// </summary>
-        Warning,
-
-        /// <summary>
-        /// Debug Log Type.
-        /// </summary>
-        Debug,
-
-        /// <summary>
         /// Chat Log Type.
         /// </summary>
         Chat,
 
         /// <summary>
-        /// PM Log Type.
-        /// </summary>
-        PM,
-
-        /// <summary>
         /// Server Chat Log Type.
         /// </summary>
-        Server,
+        Event,
 
         /// <summary>
         /// Trade Log Type.
@@ -57,19 +42,31 @@ namespace PokeD.SCON
         /// <summary>
         /// Should be reported.
         /// </summary>
-        GlobalError
+        Error,
+
+        /// <summary>
+        /// Error Log Type.
+        /// </summary>
+        Warning,
+
+        /// <summary>
+        /// Debug Log Type.
+        /// </summary>
+        Debug,
     }
 
     public static class Logger
     {
         public static void Log(LogType type, string message)
         {
-            InputWrapper.LogWriteLine($"[{DateTime.Now:yyyy-MM-dd_HH:mm:ss}]_[{type}]:{message}");
+            InputWrapper.LogWriteLine(DateTime.Now, $"[{type}]: {message}");
+            /*InputWrapper.LogWriteLine($"[{DateTime.Now:yyyy-MM-dd_HH:mm:ss}]_[{type}]: {message}");*/
         }
 
         public static void LogChatMessage(string player, string message)
         {
-            InputWrapper.LogWriteLine($"[{DateTime.Now:yyyy-MM-dd_HH:mm:ss}]_<{player}>_{message}");
+            InputWrapper.LogWriteLine(DateTime.Now, $"<{player}>: {message}");
+            /*InputWrapper.LogWriteLine($"[{DateTime.Now:yyyy-MM-dd_HH:mm:ss}]_<{player}>_{message}");*/
         }
     }
 }

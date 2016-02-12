@@ -38,7 +38,7 @@
             -->
         </TextBox>
 
-        <Image Name="Lock_Image" Margin="10,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Height="16">
+        <Image Name="Lock_Image" Margin="154,240,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="16" Height="16">
             <Image.Source>
                 <BitmapImage UriSource="Images/lock.png"/>
             </Image.Source>
@@ -49,7 +49,7 @@
                     Visibility="{Binding ServerIP_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
         <TextBox x:Name="ServerPort_Watermark_TextBox" Text="Server Port" Margin="10,205,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding ServerPort_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
-        <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,418,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding SCON_Password_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
 
             <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
