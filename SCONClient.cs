@@ -23,7 +23,7 @@ namespace PokeD.SCON
 
 
         ITCPClient Client { get; }
-        PacketStream Stream { get; }
+        ProtobufStream Stream { get; }
 
 
         PasswordStorage Password { get; set; }
@@ -31,8 +31,8 @@ namespace PokeD.SCON
 
 #if DEBUG
         // -- Debug -- //
-        List<ProtobufPacket> Received { get; } = new List<ProtobufPacket>();
-        List<ProtobufPacket> Sended { get; } = new List<ProtobufPacket>();
+        List<Packet> Received { get; } = new List<Packet>();
+        List<Packet> Sended { get; } = new List<Packet>();
         // -- Debug -- //
 #endif
 
@@ -51,7 +51,7 @@ namespace PokeD.SCON
 
             BasicUIVM.OnChatStateChanged += BasicUIViewModel_OnChatStateChanged;
 
-            Client = TCPClientWrapper.CreateTCPClient();
+            Client = TCPClientWrapper.Create();
             Stream = new ProtobufStream(Client);
         }
         private bool BasicUIViewModel_OnConnect(string ip, ushort port, string password, bool autoReconnect)
@@ -149,7 +149,7 @@ namespace PokeD.SCON
                     var dataLength = Stream.ReadVarInt();
                     if (dataLength > 0)
                     {
-                        var data = Stream.ReadByteArray(dataLength);
+                        var data = Stream.Receive(dataLength);
 
                         HandleData(data);
                     }
@@ -266,11 +266,11 @@ namespace PokeD.SCON
         }
 
 
-        private void SendPacket(ProtobufPacket packet)
+        private void SendPacket(Packet packet)
         {
             if (Stream.Connected)
             {
-                Stream.SendPacket(ref packet);
+                Stream.SendPacket(packet);
 
 #if DEBUG
                 Sended.Add(packet);

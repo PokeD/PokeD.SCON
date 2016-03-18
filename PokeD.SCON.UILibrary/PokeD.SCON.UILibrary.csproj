@@ -49,20 +49,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EmptyKeys.UserInterface, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
+    <Reference Include="EmptyKeys.UserInterface, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
     </Reference>
-    <Reference Include="EmptyKeys.UserInterface.Core, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
+    <Reference Include="EmptyKeys.UserInterface.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
     </Reference>
-    <Reference Include="EmptyKeys.UserInterface.Debug, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
+    <Reference Include="EmptyKeys.UserInterface.Debug, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
     </Reference>
-    <Reference Include="EmptyKeys.UserInterface.MonoGame, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.1.13.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
+    <Reference Include="EmptyKeys.UserInterface.MonoGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="$(SolutionDir)\PokeD.Core\PokeD.Core.csproj">
       <Project>{1CF84E56-3BBE-4A3A-9234-5951BF2558C3}</Project>
       <Name>PokeD.Core</Name>
