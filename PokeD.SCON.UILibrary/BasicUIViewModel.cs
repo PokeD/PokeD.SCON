@@ -4,10 +4,14 @@ using EmptyKeys.UserInterface;
 using EmptyKeys.UserInterface.Input;
 using EmptyKeys.UserInterface.Mvvm;
 
+using PCLExt.Config;
+
 namespace PokeD.SCON.UILibrary
 {
-    public partial class BasicUIViewModel : ViewModelBase
+    public partial class BasicUIViewModel : ViewModelBase, IDisposable
     {
+        const string FileName = "Settings";
+
         public ICommand CheckBoxCommand { get; set; }
         private Action<object> OnCheckBox { get; }
 
@@ -19,8 +23,11 @@ namespace PokeD.SCON.UILibrary
 
         public BasicUIViewModel()
         {
+            //FileSystemExtensions.LoadConfig(ConfigType.JsonConfig, FileName, this);
+
             OnCheckBox += OnCheckBoxConnection;
             OnCheckBox += OnCheckBoxConsole;
+            OnCheckBox += OnCheckBoxSaveCredentials;
 
             OnButtonClick += OnButtonClickConnection;
             OnButtonClick += OnButtonClickLogs;
@@ -56,6 +63,12 @@ namespace PokeD.SCON.UILibrary
         public void DisplayMessage(string message)
         {
             MessageBox.Show(message, new RelayCommand(o => { }), false);
+        }
+
+
+        public void Dispose()
+        {
+            //FileSystemExtensions.SaveConfig(ConfigType.JsonConfig, FileName, this);
         }
     }
 }

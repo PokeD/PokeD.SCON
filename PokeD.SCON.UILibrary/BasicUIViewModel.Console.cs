@@ -10,6 +10,7 @@ namespace PokeD.SCON.UILibrary
         private string consoleOutput = string.Empty;
         public string ConsoleOutput { get { return consoleOutput; } set { SetProperty(ref consoleOutput, value); } }
 
+
         private void OnCheckBoxConsole(object obj)
         {
             switch (obj.ToString())

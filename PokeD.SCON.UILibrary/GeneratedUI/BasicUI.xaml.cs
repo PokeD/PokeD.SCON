@@ -16,6 +16,7 @@ namespace EmptyKeys.UserInterface.Generated {
     using EmptyKeys.UserInterface.Interactions.Core;
     using EmptyKeys.UserInterface.Interactivity;
     using EmptyKeys.UserInterface.Media;
+    using EmptyKeys.UserInterface.Media.Effects;
     using EmptyKeys.UserInterface.Media.Animation;
     using EmptyKeys.UserInterface.Media.Imaging;
     using EmptyKeys.UserInterface.Shapes;
@@ -23,7 +24,7 @@ namespace EmptyKeys.UserInterface.Generated {
     using EmptyKeys.UserInterface.Themes;
     
     
-    [GeneratedCodeAttribute("Empty Keys UI Generator", "1.13.0.0")]
+    [GeneratedCodeAttribute("Empty Keys UI Generator", "2.5.0.0")]
     public partial class BasicUI : UIRoot {
         
         private Grid e_0;
@@ -399,8 +400,7 @@ namespace EmptyKeys.UserInterface.Generated {
             Binding PlayersDataGrid_Col6_b = new Binding("Ping");
             PlayersDataGrid_Col6.Binding = PlayersDataGrid_Col6_b;
             PlayersDataGrid.Columns.Add(PlayersDataGrid_Col6);
-            Binding binding_PlayersDataGrid_DataContext = new Binding("PlayersGridData");
-            PlayersDataGrid.SetBinding(DataGrid.DataContextProperty, binding_PlayersDataGrid_DataContext);
+            Grid.SetColumnSpan(PlayersDataGrid, 2);
             Binding binding_PlayersDataGrid_ItemsSource = new Binding("PlayersGridDataList");
             PlayersDataGrid.SetBinding(DataGrid.ItemsSourceProperty, binding_PlayersDataGrid_ItemsSource);
             items.Add(e_1);
@@ -589,6 +589,17 @@ namespace EmptyKeys.UserInterface.Generated {
             Grid e_12 = new Grid();
             e_11.Content = e_12;
             e_12.Name = "e_12";
+            // SaveCredentials_CheckBox element
+            CheckBox SaveCredentials_CheckBox = new CheckBox();
+            e_12.Children.Add(SaveCredentials_CheckBox);
+            SaveCredentials_CheckBox.Name = "SaveCredentials_CheckBox";
+            SaveCredentials_CheckBox.Height = 25F;
+            SaveCredentials_CheckBox.HorizontalAlignment = HorizontalAlignment.Left;
+            SaveCredentials_CheckBox.VerticalAlignment = VerticalAlignment.Top;
+            SaveCredentials_CheckBox.Content = "Save Credentials";
+            SaveCredentials_CheckBox.CommandParameter = "SaveCredentials";
+            Binding binding_SaveCredentials_CheckBox_Command = new Binding("CheckBoxCommand");
+            SaveCredentials_CheckBox.SetBinding(CheckBox.CommandProperty, binding_SaveCredentials_CheckBox_Command);
             items.Add(e_11);
             return items;
         }

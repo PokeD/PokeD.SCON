@@ -15,7 +15,7 @@ namespace PokeD.SCON
 {
     public class EmptyKeysUI : Game
     {
-        public static Point DefaultResolution => new Point(800, 640);
+        public static Point DefaultResolution => new Point(1024, 768);
 
         GraphicsDeviceManager Graphics { get; }
 
@@ -103,6 +103,7 @@ namespace PokeD.SCON
         protected override void UnloadContent()
         {
             base.UnloadContent();
+            SCONClient.Dispose();
         }
 
         protected override void Update(GameTime gameTime)

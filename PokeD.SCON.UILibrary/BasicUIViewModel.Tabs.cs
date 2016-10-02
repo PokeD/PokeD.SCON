@@ -15,7 +15,6 @@ namespace PokeD.SCON.UILibrary
             set { SetProperty(ref tabSelectedIndex, value); TabChanged?.Invoke((string) tabSelectedIndex.Header); }
         }
 
-
         private int tabItemSelectedIndex;
         public int TabItemSelectedIndex { get { return tabItemSelectedIndex; } set { SetProperty(ref tabItemSelectedIndex, value); } }
     }

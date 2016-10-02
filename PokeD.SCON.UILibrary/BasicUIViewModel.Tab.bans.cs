@@ -1,12 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 
-using PokeD.Core.Data.SCON;
+using PokeD.SCON.UILibrary.GridModels;
 
 namespace PokeD.SCON.UILibrary
 {
     public partial class BasicUIViewModel
     {
-        private ObservableCollection<Ban> bansGridDataList = new ObservableCollection<Ban>();
-        public ObservableCollection<Ban> BansGridDataList { get { return bansGridDataList; } set { SetProperty(ref bansGridDataList, value); } } 
+        private ObservableCollection<BansDataGridModel> bansGridDataList = new ObservableCollection<BansDataGridModel>();
+        public ObservableCollection<BansDataGridModel> BansGridDataList { get { return bansGridDataList; } set { SetProperty(ref bansGridDataList, value); } } 
     }
 }

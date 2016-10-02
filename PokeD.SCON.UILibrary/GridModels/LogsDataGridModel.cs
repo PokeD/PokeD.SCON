@@ -1,4 +1,4 @@
-﻿namespace PokeD.SCON.UILibrary
+﻿namespace PokeD.SCON.UILibrary.GridModels
 {
     public class LogsDataGridModel
     {

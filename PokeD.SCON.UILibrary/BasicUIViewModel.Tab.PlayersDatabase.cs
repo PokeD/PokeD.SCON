@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
 
-using PokeD.Core.Data.SCON;
+using PokeD.SCON.UILibrary.GridModels;
 
 namespace PokeD.SCON.UILibrary
 {
     public partial class BasicUIViewModel
     {
-        private ObservableCollection<PlayerDatabase> playersDatabaseGridDataList = new ObservableCollection<PlayerDatabase>();
-        public ObservableCollection<PlayerDatabase> PlayersDatabaseGridDataList { get { return playersDatabaseGridDataList; } set { SetProperty(ref playersDatabaseGridDataList, value); } }
-        
+        private ObservableCollection<PlayersDatabaseDataGridModel> playersDatabaseGridDataList = new ObservableCollection<PlayersDatabaseDataGridModel>();
+        public ObservableCollection<PlayersDatabaseDataGridModel> PlayersDatabaseGridDataList { get { return playersDatabaseGridDataList; } set { SetProperty(ref playersDatabaseGridDataList, value); } } 
     }
 }

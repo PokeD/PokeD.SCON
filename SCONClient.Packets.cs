@@ -3,18 +3,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
+using Aragas.Network;
+
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Security;
 
-using PokeD.Core;
 using PokeD.Core.Data.SCON;
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
-
 using PokeD.SCON.Exceptions;
-using PokeD.SCON.UILibrary;
+using PokeD.SCON.UILibrary.GridModels;
 
 namespace PokeD.SCON
 {
@@ -74,7 +74,19 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.PlayersGridDataList.Clear();
-                BasicUIVM.PlayersGridDataList = new ObservableCollection<PlayerInfo>(packet.PlayerInfos);
+                for (var i = 0; i < packet.PlayerInfos.Length; i++)
+                {
+                    BasicUIVM.PlayersGridDataList.Add(new PlayersDataGridModel
+                    {
+                        Number = i,
+                        Name = packet.PlayerInfos[i].Name,
+                        IP = packet.PlayerInfos[i].IP,
+                        Ping = packet.PlayerInfos[i].Ping,
+                        Position = packet.PlayerInfos[i].Position,
+                        LevelFile = packet.PlayerInfos[i].LevelFile,
+                        PlayTime = packet.PlayerInfos[i].PlayTime
+                    });
+                }
 
             }
             else
@@ -109,7 +121,6 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.LogsGridDataList.Clear();
-
                 for (var i = 0; i < packet.Logs.Length; i++)
                 {
                     BasicUIVM.LogsGridDataList.Add(new LogsDataGridModel
@@ -136,7 +147,6 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.CrashLogsGridDataList.Clear();
-
                 for (var i = 0; i < packet.CrashLogs.Length; i++)
                 {
                     BasicUIVM.CrashLogsGridDataList.Add(new LogsDataGridModel
@@ -165,7 +175,16 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.PlayersDatabaseGridDataList.Clear();
-                BasicUIVM.PlayersDatabaseGridDataList = new ObservableCollection<PlayerDatabase>(packet.PlayerDatabases);
+                for (var i = 0; i < packet.PlayerDatabases.Length; i++)
+                {
+                    BasicUIVM.PlayersDatabaseGridDataList.Add(new PlayersDatabaseDataGridModel
+                    {
+                        Number = i,
+                        Name = packet.PlayerDatabases[i].Name,
+                        LastIP = packet.PlayerDatabases[i].LastIP,
+                        LastSeen = packet.PlayerDatabases[i].LastSeen,
+                    });
+                }
             }
             else
                 DisplayMessage("You are not authorized.");
@@ -176,7 +195,18 @@ namespace PokeD.SCON
             if (Authorized)
             {
                 BasicUIVM.BansGridDataList.Clear();
-                BasicUIVM.BansGridDataList = new ObservableCollection<Ban>(packet.Bans);
+                for (var i = 0; i < packet.Bans.Length; i++)
+                {
+                    BasicUIVM.BansGridDataList.Add(new BansDataGridModel
+                    {
+                        Number = i,
+                        Name = packet.Bans[i].Name,
+                        IP = packet.Bans[i].IP,
+                        BanTime = packet.Bans[i].BanTime,
+                        UnBanTime = packet.Bans[i].UnBanTime,
+                        Reason = packet.Bans[i].Reason,
+                    });
+                }
             }
             else
                 DisplayMessage("You are not authorized.");

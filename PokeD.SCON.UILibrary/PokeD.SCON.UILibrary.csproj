@@ -37,6 +37,7 @@
     <Compile Include="BasicUIViewModel.Console.cs" />
     <Compile Include="BasicUIViewModel.Tab.CrashLogs.cs" />
     <Compile Include="BasicUIViewModel.Tab.Logs.cs" />
+    <Compile Include="BasicUIViewModel.Tab.Settings.cs" />
     <Compile Include="BasicUIViewModel.Tab.PlayersDatabase.cs" />
     <Compile Include="BasicUIViewModel.Tab.Bans.cs" />
     <Compile Include="BasicUIViewModel.Tab.Players.cs" />
@@ -45,30 +46,60 @@
     <Compile Include="BasicUIViewModel.cs" />
     <Compile Include="GeneratedUI\BasicUI.xaml.cs" />
     <Compile Include="InvertableBool.cs" />
-    <Compile Include="LogsDataGridModel.cs" />
+    <Compile Include="GridModels\PlayersDatabaseDataGridModel.cs" />
+    <Compile Include="GridModels\BansDataGridModel.cs" />
+    <Compile Include="GridModels\PlayersDataGridModel.cs" />
+    <Compile Include="GridModels\LogsDataGridModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="EmptyKeys.UserInterface, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
-    </Reference>
-    <Reference Include="EmptyKeys.UserInterface.Core, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EmptyKeys.UserInterface.Debug, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
-    </Reference>
-    <Reference Include="EmptyKeys.UserInterface.MonoGame, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.0.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
-    </Reference>
     <ProjectReference Include="$(SolutionDir)\PokeD.Core\PokeD.Core.csproj">
       <Project>{1CF84E56-3BBE-4A3A-9234-5951BF2558C3}</Project>
       <Name>PokeD.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Aragas.Network, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\Aragas.Network.1.0.6\lib\portable-net45+netcore45+wpa81\Aragas.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="crypto, Version=1.8.1.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\Portable.BouncyCastle.1.8.1.1\lib\portable-net4+sl5+wp8+win8+wpa81\crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="EmptyKeys.UserInterface, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.5.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="EmptyKeys.UserInterface.Core, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.5.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EmptyKeys.UserInterface.Debug, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.5.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Common\AnyCPU\EmptyKeys.UserInterface.Debug.dll</HintPath>
+    </Reference>
+    <Reference Include="EmptyKeys.UserInterface.MonoGame, Version=2.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\EmptyKeysUI_MonoGame.2.5.0.0\lib\portable-net45+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\MonoGame\AnyCPU\EmptyKeys.UserInterface.MonoGame.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.Config, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.Config.1.0.6\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.Config.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.Config.Abstractions, Version=1.0.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.Config.1.0.6\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.Config.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.FileStorage, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.FileStorage.1.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.FileStorage.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.FileStorage.Abstractions, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.FileStorage.1.0.5\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.FileStorage.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.Network, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.Network.1.0.12\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.Network.dll</HintPath>
+    </Reference>
+    <Reference Include="PCLExt.Network.Abstractions, Version=1.0.12.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>$(SolutionDir)\packages\PCLExt.Network.1.0.12\lib\portable-net45+wp8+wpa81+win8+monoandroid+monotouch+Xamarin.iOS+Xamarin.Mac\PCLExt.Network.Abstractions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="BehaviorsLicense.txt" />
     <Content Include="license.txt" />
+    <Content Include="shaders\DirectionalBlurShader.fx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

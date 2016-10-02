@@ -52,7 +52,7 @@
         <TextBox x:Name="SCON_Password_Watermark_TextBox" Text="SCON Password" Margin="10,235,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                     Visibility="{Binding SCON_Password_Watermark}" IsHitTestVisible="False" IsEnabled="False" Height="25" Width="160"/>
 
-            <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
+        <CheckBox x:Name="AutoReconnect_CheckBox" Content="Auto Reconnect" Margin="15,265,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"
                    Command="{Binding CheckBoxCommand}" CommandParameter="AutoReconnect" Width="160" Height="25"/>
 
         <Button x:Name="Connect_Button" Content="Connect" Margin="10,295,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="160"
@@ -70,7 +70,7 @@
 
             <TabItem Header="Players">
                 <Grid>
-                    <DataGrid x:Name="PlayersDataGrid" DataContext="{Binding PlayersGridData}" ItemsSource="{Binding PlayersGridDataList}" AutoGenerateColumns="False">
+                    <DataGrid x:Name="PlayersDataGrid" ItemsSource="{Binding PlayersGridDataList}" AutoGenerateColumns="False" Grid.ColumnSpan="2">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
@@ -118,7 +118,7 @@
                     <DataGrid x:Name="LogsDataGrid" ItemsSource="{Binding LogsGridDataList}" AutoGenerateColumns="False" SelectedIndex="{Binding TabItemSelectedIndex}" Margin="0,0,0,37">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="#" Binding="{Binding Number}"/>
-                            <DataGridTextColumn Header="Log Filename" Binding="{Binding LogFilename}"/>
+                            <DataGridTextColumn Header="Log Filename" Binding="{Binding LogFilename}" Width="Auto"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button x:Name="GetLog_Button" Content="Get Log" HorizontalAlignment="Right" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="110"
@@ -141,6 +141,8 @@
 
             <TabItem Header="Settings">
                 <Grid>
+                    <CheckBox x:Name="SaveCredentials_CheckBox" Content="Save Credentials" HorizontalAlignment="Left" VerticalAlignment="Top"
+                  Command="{Binding CheckBoxCommand}" CommandParameter="SaveCredentials" Height="25"/>
                 </Grid>
             </TabItem>
 

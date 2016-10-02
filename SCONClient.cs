@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using Aragas.Core.Data;
-using Aragas.Core.Interfaces;
-using Aragas.Core.IO;
-using Aragas.Core.Packets;
-using Aragas.Core.Wrappers;
+using Aragas.Network.IO;
+using Aragas.Network.Data;
+using Aragas.Network.Packets;
 
-using PokeD.Core.Packets;
+using PCLExt.Network;
+
+using PokeD.Core;
+using PokeD.Core.Packets.SCON;
 using PokeD.Core.Packets.SCON.Authorization;
 using PokeD.Core.Packets.SCON.Chat;
 using PokeD.Core.Packets.SCON.Logs;
 using PokeD.Core.Packets.SCON.Status;
-
+using PokeD.SCON.Extensions;
 using PokeD.SCON.UILibrary;
 
 namespace PokeD.SCON
@@ -22,7 +23,7 @@ namespace PokeD.SCON
         BasicUIViewModel BasicUIVM { get; }
 
 
-        ITCPClient Client { get; }
+        ISocketClient Client { get; }
         ProtobufStream Stream { get; }
 
 
@@ -31,8 +32,10 @@ namespace PokeD.SCON
 
 #if DEBUG
         // -- Debug -- //
-        List<Packet> Received { get; } = new List<Packet>();
-        List<Packet> Sended { get; } = new List<Packet>();
+        List<ProtobufPacket> Received { get; } = new List<ProtobufPacket>();
+        List<ProtobufPacket> Sended { get; } = new List<ProtobufPacket>();
+        public object FileStorageExtension { get; private set; }
+
         // -- Debug -- //
 #endif
 
@@ -51,7 +54,7 @@ namespace PokeD.SCON
 
             BasicUIVM.OnChatStateChanged += BasicUIViewModel_OnChatStateChanged;
 
-            Client = TCPClientWrapper.Create();
+            Client = SocketClient.CreateTCP();
             Stream = new ProtobufStream(Client);
         }
         private bool BasicUIViewModel_OnConnect(string ip, ushort port, string password, bool autoReconnect)
@@ -59,7 +62,7 @@ namespace PokeD.SCON
             try
             {
                 Password = new PasswordStorage(password);
-                if (Stream.Connected)
+                if (Stream.IsConnected)
                     Disconnect();
                 
                 Stream.Connect(ip, port);
@@ -74,7 +77,7 @@ namespace PokeD.SCON
         {
             try
             {
-                if (Stream.Connected)
+                if (Stream.IsConnected)
                     Disconnect();
                 
                 return true;
@@ -83,7 +86,7 @@ namespace PokeD.SCON
         }
         private void BasicUIViewModel_TabChanged(string tabName)
         {
-            if(!Stream.Connected)
+            if(!Stream.IsConnected)
                 return;
 
             switch (tabName)
@@ -114,21 +117,21 @@ namespace PokeD.SCON
         }
         private void BasicUIViewModel_GetLog(int index)
         {
-            if (!Stream.Connected)
+            if (!Stream.IsConnected)
                 DisplayMessage("Not connected to server!");
             else
                 SendPacket(new LogFileRequestPacket { LogFilename = BasicUIVM.LogsGridDataList[index].LogFilename });
         }
         private void BasicUIViewModel_GetCrashLog(int index)
         {
-            if (!Stream.Connected)
+            if (!Stream.IsConnected)
                 DisplayMessage("Not connected to server!");
             else
                 SendPacket(new CrashLogFileRequestPacket { CrashLogFilename = BasicUIVM.CrashLogsGridDataList[index].LogFilename });
         }
         private void BasicUIViewModel_SaveLog(string logname, string log)
         {
-            FileSystemWrapper.SaveLog(logname, log);
+            FileStorageExtensions.SaveLog(logname, log);
         }
 
         private void BasicUIViewModel_OnChatStateChanged(bool value)
@@ -142,27 +145,22 @@ namespace PokeD.SCON
 
         public void Update()
         {
-            if (Stream.Connected)
+            if (Stream.IsConnected && Stream.DataAvailable > 0)
             {
-                if (Stream.Connected && Stream.DataAvailable > 0)
+                var dataLength = Stream.ReadVarInt();
+                if (dataLength > 0)
                 {
-                    var dataLength = Stream.ReadVarInt();
-                    if (dataLength > 0)
-                    {
-                        var data = Stream.Receive(dataLength);
+                    var data = Stream.Receive(dataLength);
 
-                        HandleData(data);
-                    }
-                    else
-                    {
-                        Logger.Log(LogType.Error, $"Protobuf Reading Error: Packet Length size is 0. Disconnecting.");
-                        SendPacket(new AuthorizationDisconnectPacket {Reason = "Packet Length size is 0!"});
-                        Dispose();
-                    }
+                    HandleData(data);
+                }
+                else
+                {
+                    Logger.Log(LogType.Error, $"Protobuf Reading Error: Packet Length size is 0. Disconnecting.");
+                    SendPacket(new AuthorizationDisconnectPacket { Reason = "Packet Length size is 0!" });
+                    Dispose();
                 }
             }
-            else
-                Dispose();
         }
 
         private void HandleData(byte[] data)
@@ -173,17 +171,26 @@ namespace PokeD.SCON
                 {
                     var id = reader.Read<VarInt>();
 
-                    if (SCONPacketResponses.Packets.Length > id)
+                    Func<SCONPacket> func;
+                    if (SCONPacketResponses.TryGetPacketFunc(id, out func))
                     {
-                        if (SCONPacketResponses.Packets[id] != null)
+                        if (func != null)
                         {
-                            var packet = SCONPacketResponses.Packets[id]().ReadPacket(reader);
-
-                            HandlePacket(packet);
+                            var packet = func().ReadPacket(reader);
+                            if (packet != null)
+                            {
+                                HandlePacket(packet);
 
 #if DEBUG
-                            Received.Add(packet);
+                                Received.Add(packet);
 #endif
+                            }
+                            else
+                            {
+                                Logger.Log(LogType.Error, $"SCON Reading Error: packet is null. Packet ID {id}");
+                                SendPacket(new AuthorizationDisconnectPacket { Reason = $"Packet ID {id} is not correct!" });
+                                Dispose();
+                            }
                         }
                         else
                         {
@@ -266,9 +273,9 @@ namespace PokeD.SCON
         }
 
 
-        private void SendPacket(Packet packet)
+        private void SendPacket(SCONPacket packet)
         {
-            if (Stream.Connected)
+            if (Stream.IsConnected)
             {
                 Stream.SendPacket(packet);
 
@@ -293,7 +300,7 @@ namespace PokeD.SCON
 
         public void Dispose()
         {
-            
+            BasicUIVM.Dispose();
         }
     }
 }
